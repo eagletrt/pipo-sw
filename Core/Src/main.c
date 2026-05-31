@@ -18,7 +18,6 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "stm32c0xx_hal_gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -64,6 +63,16 @@ static void MX_USART1_UART_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+static void VectorBase_Config(void) {
+    /* The constant array with vectors of the vector table is declared externally in the
+   * c-startup code.
+   */
+    extern const unsigned long g_pfnVectors[];
+
+    /* Remap the vector table to where the vector table is located for this program. */
+    SCB->VTOR = (unsigned long)&g_pfnVectors[0];
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -71,6 +80,8 @@ static void MX_USART1_UART_Init(void);
   * @retval int
   */
 int main(void) {
+
+    VectorBase_Config();
 
     /* USER CODE BEGIN 1 */
 
@@ -104,18 +115,10 @@ int main(void) {
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
     while (1) {
-
         // HAL_GPIO_WritePin(STATUS_3_GPIO_Port, STATUS_3_Pin, GPIO_PIN_SET);
-        // HAL_GPIO_TogglePin(GPIOA, STATUS_3_Pin);
-        // HAL_Delay(500);
 
         HAL_GPIO_TogglePin(STATUS_3_GPIO_Port, STATUS_3_Pin);
         HAL_Delay(1000);
-        HAL_GPIO_TogglePin(STATUS_2_GPIO_Port, STATUS_2_Pin);
-        HAL_Delay(1000);
-        HAL_GPIO_TogglePin(STATUS_1_GPIO_Port, STATUS_1_Pin);
-        HAL_Delay(1000);
-
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */
