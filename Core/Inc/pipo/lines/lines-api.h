@@ -33,6 +33,13 @@ enum LinesReturnCode lines_api_update_low_power_voltage(const voltage value);
 enum LinesReturnCode lines_api_update_high_power_voltage(const voltage value);
 
 /*!
+ * \brief Update the autonomous system line voltage.
+ * \param[in] value The voltage of the line in V.
+ * \retval LINES_RC_OK on success.
+ */
+enum LinesReturnCode lines_api_update_autonomous_system_voltage(const voltage value);
+
+/*!
  * \brief Update a line voltage.
  * \param[in] index The line index.
  * \param[in] value The voltage of a line in V.
@@ -83,6 +90,12 @@ voltage lines_api_get_low_power_voltage(void);
  * \return The high power line voltage in V.
  */
 voltage lines_api_get_high_power_voltage(void);
+
+/*!
+ * \brief Get the autonomous system line voltage.
+ * \return The autonomous system line voltage in V.
+ */
+voltage lines_api_get_autonomous_system_voltage(void);
 
 /*!
  * \brief Get the line voltages array.

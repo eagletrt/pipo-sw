@@ -8,8 +8,6 @@
 #ifndef LINES_H
 #define LINES_H
 
-#define LINES_NUM_LINES 14
-
 typedef float voltage;
 typedef float current;
 
@@ -18,8 +16,8 @@ typedef float current;
  */
 enum LinesReturnCode {
     LINES_RC_OK,            /*!< Operation completed successfully */
-    LINES_RC_OUT_OF_BOUNDS, /*!< Could not write or read a value because the index was invalid*/
-    LINES_RC_,              /*!<  */
+    LINES_RC_OUT_OF_BOUNDS, /*!< Could not write or read a value because the index was invalid */
+    LINES_RC_NULL_POINTER,  /*!< Could not write or read a value because a pointer was null */
     LINES_RC_ERROR,         /*!< Operation not completed */
 };
 
@@ -28,16 +26,18 @@ enum LinesReturnCode {
  */
 enum LinesIndex {
     LINES_INDEX_PALLE = 0x00, /*!< The index for the PALLE line */
+    LINES_INDEX_COUNT
 };
 
 /*!
  * \brief Internal state of the lines module.
  */
 struct LinesHandler {
-    current lines_current[LINES_NUM_LINES]; /*!< Each line current in A */
-    voltage lines_voltage[LINES_NUM_LINES]; /*!< Each line voltage in V */
-    voltage high_power_voltage;             /*!< The high power line voltage in V */
-    voltage low_power_voltage;              /*!< The low power line voltage in V */
+    current lines_current[LINES_INDEX_COUNT]; /*!< Each line current in A */
+    voltage lines_voltage[LINES_INDEX_COUNT]; /*!< Each line voltage in V */
+    voltage high_power_voltage;               /*!< The high power line voltage in V */
+    voltage low_power_voltage;                /*!< The low power line voltage in V */
+    voltage autonomous_system_voltage;        /*!< The low power line voltage in V */
 };
 
 #endif
