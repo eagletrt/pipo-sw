@@ -18,6 +18,10 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "adc.h"
+#include "fdcan.h"
+#include "usart.h"
+#include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -40,11 +44,6 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-ADC_HandleTypeDef hadc1;
-
-FDCAN_HandleTypeDef hfdcan1;
-
-UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
 
@@ -52,10 +51,6 @@ UART_HandleTypeDef huart1;
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-static void MX_GPIO_Init(void);
-static void MX_ADC1_Init(void);
-static void MX_FDCAN1_Init(void);
-static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -65,8 +60,8 @@ static void MX_USART1_UART_Init(void);
 
 static void VectorBase_Config(void) {
     /* The constant array with vectors of the vector table is declared externally in the
-   * c-startup code.
-   */
+  * c-startup code.
+  */
     extern const unsigned long g_pfnVectors[];
 
     /* Remap the vector table to where the vector table is located for this program. */
@@ -81,10 +76,8 @@ static void VectorBase_Config(void) {
   */
 int main(void) {
 
-    VectorBase_Config();
-
     /* USER CODE BEGIN 1 */
-
+    VectorBase_Config();
     /* USER CODE END 1 */
 
     /* MCU Configuration--------------------------------------------------------*/
@@ -158,246 +151,6 @@ void SystemClock_Config(void) {
     if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK) {
         Error_Handler();
     }
-}
-
-/**
-  * @brief ADC1 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_ADC1_Init(void) {
-
-    /* USER CODE BEGIN ADC1_Init 0 */
-
-    /* USER CODE END ADC1_Init 0 */
-
-    ADC_ChannelConfTypeDef sConfig = { 0 };
-
-    /* USER CODE BEGIN ADC1_Init 1 */
-
-    /* USER CODE END ADC1_Init 1 */
-
-    /** Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion)
-  */
-    hadc1.Instance = ADC1;
-    hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV1;
-    hadc1.Init.Resolution = ADC_RESOLUTION_12B;
-    hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
-    hadc1.Init.ScanConvMode = ADC_SCAN_SEQ_FIXED;
-    hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
-    hadc1.Init.LowPowerAutoWait = DISABLE;
-    hadc1.Init.LowPowerAutoPowerOff = DISABLE;
-    hadc1.Init.ContinuousConvMode = DISABLE;
-    hadc1.Init.NbrOfConversion = 1;
-    hadc1.Init.DiscontinuousConvMode = DISABLE;
-    hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
-    hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
-    hadc1.Init.DMAContinuousRequests = DISABLE;
-    hadc1.Init.Overrun = ADC_OVR_DATA_PRESERVED;
-    hadc1.Init.SamplingTimeCommon1 = ADC_SAMPLETIME_1CYCLE_5;
-    hadc1.Init.OversamplingMode = DISABLE;
-    hadc1.Init.TriggerFrequencyMode = ADC_TRIGGER_FREQ_HIGH;
-    if (HAL_ADC_Init(&hadc1) != HAL_OK) {
-        Error_Handler();
-    }
-
-    /** Configure Regular Channel
-  */
-    sConfig.Channel = ADC_CHANNEL_0;
-    sConfig.Rank = ADC_RANK_CHANNEL_NUMBER;
-    if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK) {
-        Error_Handler();
-    }
-
-    /** Configure Regular Channel
-  */
-    sConfig.Channel = ADC_CHANNEL_1;
-    if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK) {
-        Error_Handler();
-    }
-
-    /** Configure Regular Channel
-  */
-    sConfig.Channel = ADC_CHANNEL_2;
-    if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK) {
-        Error_Handler();
-    }
-
-    /** Configure Regular Channel
-  */
-    sConfig.Channel = ADC_CHANNEL_3;
-    if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK) {
-        Error_Handler();
-    }
-
-    /** Configure Regular Channel
-  */
-    sConfig.Channel = ADC_CHANNEL_4;
-    if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK) {
-        Error_Handler();
-    }
-
-    /** Configure Regular Channel
-  */
-    sConfig.Channel = ADC_CHANNEL_5;
-    if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK) {
-        Error_Handler();
-    }
-
-    /** Configure Regular Channel
-  */
-    sConfig.Channel = ADC_CHANNEL_6;
-    if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK) {
-        Error_Handler();
-    }
-
-    /** Configure Regular Channel
-  */
-    sConfig.Channel = ADC_CHANNEL_7;
-    if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK) {
-        Error_Handler();
-    }
-
-    /** Configure Regular Channel
-  */
-    sConfig.Channel = ADC_CHANNEL_8;
-    if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK) {
-        Error_Handler();
-    }
-
-    /** Configure Regular Channel
-  */
-    sConfig.Channel = ADC_CHANNEL_19;
-    if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK) {
-        Error_Handler();
-    }
-    /* USER CODE BEGIN ADC1_Init 2 */
-
-    /* USER CODE END ADC1_Init 2 */
-}
-
-/**
-  * @brief FDCAN1 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_FDCAN1_Init(void) {
-
-    /* USER CODE BEGIN FDCAN1_Init 0 */
-
-    /* USER CODE END FDCAN1_Init 0 */
-
-    /* USER CODE BEGIN FDCAN1_Init 1 */
-
-    /* USER CODE END FDCAN1_Init 1 */
-    hfdcan1.Instance = FDCAN1;
-    hfdcan1.Init.ClockDivider = FDCAN_CLOCK_DIV1;
-    hfdcan1.Init.FrameFormat = FDCAN_FRAME_CLASSIC;
-    hfdcan1.Init.Mode = FDCAN_MODE_NORMAL;
-    hfdcan1.Init.AutoRetransmission = DISABLE;
-    hfdcan1.Init.TransmitPause = DISABLE;
-    hfdcan1.Init.ProtocolException = DISABLE;
-    hfdcan1.Init.NominalPrescaler = 16;
-    hfdcan1.Init.NominalSyncJumpWidth = 1;
-    hfdcan1.Init.NominalTimeSeg1 = 1;
-    hfdcan1.Init.NominalTimeSeg2 = 1;
-    hfdcan1.Init.DataPrescaler = 1;
-    hfdcan1.Init.DataSyncJumpWidth = 1;
-    hfdcan1.Init.DataTimeSeg1 = 1;
-    hfdcan1.Init.DataTimeSeg2 = 1;
-    hfdcan1.Init.StdFiltersNbr = 0;
-    hfdcan1.Init.ExtFiltersNbr = 0;
-    hfdcan1.Init.TxFifoQueueMode = FDCAN_TX_FIFO_OPERATION;
-    if (HAL_FDCAN_Init(&hfdcan1) != HAL_OK) {
-        Error_Handler();
-    }
-    /* USER CODE BEGIN FDCAN1_Init 2 */
-
-    /* USER CODE END FDCAN1_Init 2 */
-}
-
-/**
-  * @brief USART1 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_USART1_UART_Init(void) {
-
-    /* USER CODE BEGIN USART1_Init 0 */
-
-    /* USER CODE END USART1_Init 0 */
-
-    /* USER CODE BEGIN USART1_Init 1 */
-
-    /* USER CODE END USART1_Init 1 */
-    huart1.Instance = USART1;
-    huart1.Init.BaudRate = 115200;
-    huart1.Init.WordLength = UART_WORDLENGTH_8B;
-    huart1.Init.StopBits = UART_STOPBITS_1;
-    huart1.Init.Parity = UART_PARITY_NONE;
-    huart1.Init.Mode = UART_MODE_TX_RX;
-    huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-    huart1.Init.OverSampling = UART_OVERSAMPLING_16;
-    huart1.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
-    huart1.Init.ClockPrescaler = UART_PRESCALER_DIV1;
-    huart1.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
-    if (HAL_UART_Init(&huart1) != HAL_OK) {
-        Error_Handler();
-    }
-    if (HAL_UARTEx_SetTxFifoThreshold(&huart1, UART_TXFIFO_THRESHOLD_1_8) != HAL_OK) {
-        Error_Handler();
-    }
-    if (HAL_UARTEx_SetRxFifoThreshold(&huart1, UART_RXFIFO_THRESHOLD_1_8) != HAL_OK) {
-        Error_Handler();
-    }
-    if (HAL_UARTEx_DisableFifoMode(&huart1) != HAL_OK) {
-        Error_Handler();
-    }
-    /* USER CODE BEGIN USART1_Init 2 */
-
-    /* USER CODE END USART1_Init 2 */
-}
-
-/**
-  * @brief GPIO Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_GPIO_Init(void) {
-    GPIO_InitTypeDef GPIO_InitStruct = { 0 };
-    /* USER CODE BEGIN MX_GPIO_Init_1 */
-
-    /* USER CODE END MX_GPIO_Init_1 */
-
-    /* GPIO Ports Clock Enable */
-    __HAL_RCC_GPIOB_CLK_ENABLE();
-    __HAL_RCC_GPIOC_CLK_ENABLE();
-    __HAL_RCC_GPIOA_CLK_ENABLE();
-
-    /*Configure GPIO pin Output Level */
-    HAL_GPIO_WritePin(GPIOA, MUX_A1_Pin | STATUS_1_Pin, GPIO_PIN_RESET);
-
-    /*Configure GPIO pin Output Level */
-    HAL_GPIO_WritePin(GPIOB, STATUS_2_Pin | STATUS_3_Pin | MUX_A0_Pin | MUX_A2_Pin | MUX_A3_Pin, GPIO_PIN_RESET);
-
-    /*Configure GPIO pins : MUX_A1_Pin STATUS_1_Pin */
-    GPIO_InitStruct.Pin = MUX_A1_Pin | STATUS_1_Pin;
-    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-    /*Configure GPIO pins : STATUS_2_Pin STATUS_3_Pin MUX_A0_Pin MUX_A2_Pin
-                           MUX_A3_Pin */
-    GPIO_InitStruct.Pin = STATUS_2_Pin | STATUS_3_Pin | MUX_A0_Pin | MUX_A2_Pin | MUX_A3_Pin;
-    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-    /* USER CODE BEGIN MX_GPIO_Init_2 */
-
-    /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
