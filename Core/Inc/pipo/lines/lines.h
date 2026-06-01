@@ -2,7 +2,7 @@
  * \file lines.h
  * \author Riccardo Segala 
  * \date 2026-06-1
- * \brief Module for managing the output power lines
+ * \brief Module for managing the power lines
  */
 
 #ifndef LINES_H
@@ -16,28 +16,57 @@ typedef float current;
  */
 enum LinesReturnCode {
     LINES_RC_OK,            /*!< Operation completed successfully */
-    LINES_RC_OUT_OF_BOUNDS, /*!< Could not write or read a value because the index was invalid */
-    LINES_RC_NULL_POINTER,  /*!< Could not write or read a value because a pointer was null */
-    LINES_RC_ERROR,         /*!< Operation not completed */
+    LINES_RC_OUT_OF_BOUNDS, /*!< Index is outside valid range */
+    LINES_RC_NULL_POINTER,  /*!< A pointer argument was null */
+    LINES_RC_ERROR          /*!< Generic failure */
 };
 
 /*!
- * \brief Return codes for the lines module APIs.
+ * \brief Unified index map for all power and signal lines.
+ *
+ * This includes:
+ * - Low voltage auxiliary rails (LP)
+ * - High power rails (HP)
+ * - Autonomous system supply (AS)
+ * - General system loads
  */
 enum LinesIndex {
-    LINES_INDEX_PALLE = 0x00, /*!< The index for the PALLE line */
-    LINES_INDEX_COUNT
+
+    /* Low power domain */
+    LINES_INDEX_LP_MAIN = 0x00, /*!< Low power spare 1 */
+    LINES_INDEX_LP_SPARE1,      /*!< Low power spare 1 */
+    LINES_INDEX_LP_SPARE2,      /*!< Low power spare 2 */
+    LINES_INDEX_DRIVER,         /*!< Low power driver supply */
+    LINES_INDEX_LIGHTS,         /*!< Low power lights supply */
+    LINES_INDEX_PWRTRAIN,       /*!< Low power powertrain supply */
+    LINES_INDEX_TLM,            /*!< Low power telemetry supply */
+    LINES_INDEX_SD,             /*!< Shutdown circuit */
+    LINES_INDEX_COOL_LT,        /*!< Low temperature cooling */
+    LINES_INDEX_COOL_HT,        /*!< High temperature cooling */
+
+    /* High power domain */
+    LINES_INDEX_HP_MAIN,  /*!< High power main rail */
+    LINES_INDEX_LVBAT,    /*!< Low voltage battery */
+    LINES_INDEX_HP_SPARE, /*!< High power spare rail */
+    LINES_INDEX_PC,       /*!< Precharge control */
+    LINES_INDEX_VISION,   /*!< Low power spare 1 */
+
+    /* Autonomous system domain */
+    LINES_INDEX_AS_MAIN,  /*!< Autonomous system main supply */
+    LINES_INDEX_AS_EBS,   /*!< Emergency brake system */
+    LINES_INDEX_AS_STEER, /*!< Steering system */
+
+    LINES_INDEX_COUNT /*!< Number of lines */
 };
 
 /*!
  * \brief Internal state of the lines module.
+ *
+ * All voltages and currents are indexed using LinesIndex.
  */
 struct LinesHandler {
-    current lines_current[LINES_INDEX_COUNT]; /*!< Each line current in A */
-    voltage lines_voltage[LINES_INDEX_COUNT]; /*!< Each line voltage in V */
-    voltage high_power_voltage;               /*!< The high power line voltage in V */
-    voltage low_power_voltage;                /*!< The low power line voltage in V */
-    voltage autonomous_system_voltage;        /*!< The low power line voltage in V */
+    current lines_current[LINES_INDEX_COUNT]; /*!< Line currents in A */
+    voltage lines_voltage[LINES_INDEX_COUNT]; /*!< Line voltages in V */
 };
 
 #endif

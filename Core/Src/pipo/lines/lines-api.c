@@ -18,24 +18,6 @@ enum LinesReturnCode lines_api_init(void) {
     return LINES_RC_OK;
 }
 
-enum LinesReturnCode lines_api_update_low_power_voltage(const voltage value) {
-    handler.low_power_voltage = value;
-
-    return LINES_RC_OK;
-}
-
-enum LinesReturnCode lines_api_update_high_power_voltage(const voltage value) {
-    handler.high_power_voltage = value;
-
-    return LINES_RC_OK;
-}
-
-enum LinesReturnCode lines_api_update_autonomous_system_voltage(const voltage value) {
-    handler.autonomous_system_voltage = value;
-
-    return LINES_RC_OK;
-}
-
 enum LinesReturnCode lines_api_update_line_voltage(
     const size_t index,
     const voltage value) {
@@ -104,18 +86,6 @@ enum LinesReturnCode lines_api_update_line_currents(
     return LINES_RC_OK;
 }
 
-voltage lines_api_get_low_power_voltage(void) {
-    return handler.low_power_voltage;
-}
-
-voltage lines_api_get_high_power_voltage(void) {
-    return handler.high_power_voltage;
-}
-
-voltage lines_api_get_autonomous_system_voltage(void) {
-    return handler.autonomous_system_voltage;
-}
-
 const voltage *lines_api_get_line_voltages(size_t *size) {
     if (size != NULL) {
         *size = LINES_INDEX_COUNT;
@@ -130,4 +100,36 @@ const current *lines_api_get_line_currents(size_t *size) {
     }
 
     return handler.lines_current;
+}
+
+enum LinesReturnCode lines_api_get_line_voltage(
+    const size_t index,
+    voltage *value) {
+
+    if (value == NULL) {
+        return LINES_RC_NULL_POINTER;
+    }
+
+    if (index >= LINES_INDEX_COUNT) {
+        return LINES_RC_OUT_OF_BOUNDS;
+    }
+
+    *value = handler.lines_voltage[index];
+    return LINES_RC_OK;
+}
+
+enum LinesReturnCode lines_api_get_line_current(
+    const size_t index,
+    current *value) {
+
+    if (value == NULL) {
+        return LINES_RC_NULL_POINTER;
+    }
+
+    if (index >= LINES_INDEX_COUNT) {
+        return LINES_RC_OUT_OF_BOUNDS;
+    }
+
+    *value = handler.lines_current[index];
+    return LINES_RC_OK;
 }

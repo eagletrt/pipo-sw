@@ -19,27 +19,6 @@
 enum LinesReturnCode lines_api_init(void);
 
 /*!
- * \brief Update the low power line voltage.
- * \param[in] value The voltage of the line in V.
- * \retval LINES_RC_OK on success.
- */
-enum LinesReturnCode lines_api_update_low_power_voltage(const voltage value);
-
-/*!
- * \brief Update the high power line voltage.
- * \param[in] value The voltage of the line in V.
- * \retval LINES_RC_OK on success.
- */
-enum LinesReturnCode lines_api_update_high_power_voltage(const voltage value);
-
-/*!
- * \brief Update the autonomous system line voltage.
- * \param[in] value The voltage of the line in V.
- * \retval LINES_RC_OK on success.
- */
-enum LinesReturnCode lines_api_update_autonomous_system_voltage(const voltage value);
-
-/*!
  * \brief Update a line voltage.
  * \param[in] index The line index.
  * \param[in] value The voltage of a line in V.
@@ -80,22 +59,14 @@ enum LinesReturnCode lines_api_update_line_current(const size_t index, const cur
 enum LinesReturnCode lines_api_update_line_currents(const size_t index, const current *values, const size_t size);
 
 /*!
- * \brief Get the low power line voltage.
- * \return The low power line voltage in V.
+ * \brief Get a line voltage.
+ * \param[in] index The line index.
+ * \param[out] value Pointer where the voltage will be stored.
+ * \retval LINES_RC_OK on success.
+ * \retval LINES_RC_OUT_OF_BOUNDS if the index is out of range.
+ * \retval LINES_RC_NULL_POINTER if value is null.
  */
-voltage lines_api_get_low_power_voltage(void);
-
-/*!
- * \brief Get the high power line voltage.
- * \return The high power line voltage in V.
- */
-voltage lines_api_get_high_power_voltage(void);
-
-/*!
- * \brief Get the autonomous system line voltage.
- * \return The autonomous system line voltage in V.
- */
-voltage lines_api_get_autonomous_system_voltage(void);
+enum LinesReturnCode lines_api_get_line_voltage(const size_t index, voltage *value);
 
 /*!
  * \brief Get the line voltages array.
@@ -104,6 +75,16 @@ voltage lines_api_get_autonomous_system_voltage(void);
  * \return Pointer to the line voltages array.
  */
 const voltage *lines_api_get_line_voltages(size_t *size);
+
+/*!
+ * \brief Get a line current.
+ * \param[in] index The line index.
+ * \param[out] value Pointer where the current will be stored.
+ * \retval LINES_RC_OK on success.
+ * \retval LINES_RC_OUT_OF_BOUNDS if the index is out of range.
+ * \retval LINES_RC_NULL_POINTER if value is null.
+ */
+enum LinesReturnCode lines_api_get_line_current(const size_t index, current *value);
 
 /*!
  * \brief Get the line currents array.
