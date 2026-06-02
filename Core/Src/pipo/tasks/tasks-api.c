@@ -11,8 +11,8 @@
 
 #include <string.h>
 
-extern const struct TasksTask __tasks_start;
-extern const struct TasksTask __tasks_end;
+extern struct TasksTask __tasks_start;
+extern struct TasksTask __tasks_end;
 
 EAGLETRT_STATIC struct TasksHandler handler;
 
@@ -27,7 +27,7 @@ void tasks_routine(void) {
 
     struct TasksTask *current_task = &__tasks_start;
 
-    while (current_task < &__tasks_end) {
+    while (current_task <= &__tasks_end) {
         if (handler.current_tick - current_task->last_execution >= current_task->period) {
             current_task->last_execution = handler.current_tick;
 
