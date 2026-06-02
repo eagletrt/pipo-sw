@@ -14,7 +14,6 @@
 
 #define ANIMATION_END 0xff
 #define ANIMATION_MAX_LENGTH 16
-#define ANIMATION_TIME_SCALE 300
 
 struct TasksTask status_task __attribute__((section(".tasks"))) = {
     .start_delay = 0,
