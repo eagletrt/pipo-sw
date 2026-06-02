@@ -7,7 +7,7 @@
 
 #include "status-api.h"
 #include "eagletrt.h"
-#include "status.h"
+#include "tasks.h"
 
 #include <stddef.h>
 #include <string.h>
@@ -15,6 +15,13 @@
 #define ANIMATION_END 0xff
 #define ANIMATION_MAX_LENGTH 16
 #define ANIMATION_TIME_SCALE 300
+
+const struct TasksTask status_task __attribute__((section(".tasks"))) = {
+    .start_delay = 0,
+    .period = 200,
+    .last_execution = 0,
+    .callback = status_routine,
+};
 
 EAGLETRT_STATIC const uint8_t animation_bitmaps[STATUS_TYPE_COUNT][ANIMATION_MAX_LENGTH] = {
     [STATUS_TYPE_IDLE] = { 0x00, 0x01, 0x02, 0x04, ANIMATION_END },
@@ -51,19 +58,14 @@ enum StatusReturnCode status_set_status(enum StatusType status) {
     return STATUS_RC_OK;
 }
 
-enum StatusReturnCode status_routine(void) {
+void status_routine(void) {
 
-    if ((++handler.last_update % ANIMATION_TIME_SCALE) == 0) {
-
-        if (animation_bitmaps[handler.status][handler.animation_index] == ANIMATION_END) {
-            // If the animation is ended reset the animation index
-            handler.animation_index = 0;
-        }
-
-        // Write the current animation frame bitmap
-        handler.led_write(
-            animation_bitmaps[handler.status][handler.animation_index++]);
+    if (animation_bitmaps[handler.status][handler.animation_index] == ANIMATION_END) {
+        // If the animation is ended reset the animation index
+        handler.animation_index = 0;
     }
 
-    return STATUS_RC_OK;
+    // Write the current animation frame bitmap
+    handler.led_write(
+        animation_bitmaps[handler.status][handler.animation_index++]);
 }

@@ -11,11 +11,6 @@
 #include <stdint.h>
 
 /*!
- * \brief Time tick type used for timing status behavior.
- */
-typedef uint16_t tick;
-
-/*!
  * \brief Bitmask representing the state of all status LEDs.
  *
  * Each bit corresponds to a physical LED:
@@ -65,8 +60,6 @@ enum StatusType {
  */
 struct StatusHandler {
     enum StatusType status; /*!< Current system status mode */
-
-    tick last_update; /*!< Last update timestamp for timing logic */
 
     uint8_t animation_index; /*!< Current index of the active animation */
 

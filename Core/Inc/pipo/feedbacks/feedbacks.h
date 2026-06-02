@@ -27,7 +27,7 @@ enum FeedbacksReturnCode {
  * These represent the different digital/analog feedback channels
  * monitored by the system, including power rails and shutdown signals.
  */
-enum FeedbackType {
+enum FeedbacksType {
     FEEDBACK_TYPE_5V = 0x00,     /*!< 5 V supply feedback signal */
     FEEDBACK_TYPE_RES_GO,        /*!< RES (Reset Enable Signal) GO feedback */
     FEEDBACK_TYPE_SHUTDOWN_BSPD, /*!< BSPD shutdown circuit feedback */

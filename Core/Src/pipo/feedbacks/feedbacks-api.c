@@ -19,7 +19,7 @@ enum FeedbacksReturnCode feedbacks_api_init(void) {
 }
 
 enum FeedbacksReturnCode feedbacks_api_update_feedback(
-    const enum FeedbackType type,
+    const enum FeedbacksType type,
     const voltage value) {
 
     if (type >= FEEDBACK_TYPE_COUNT) {
@@ -32,7 +32,7 @@ enum FeedbacksReturnCode feedbacks_api_update_feedback(
 }
 
 enum FeedbacksReturnCode feedbacks_api_get_feedback(
-    const enum FeedbackType type,
+    const enum FeedbacksType type,
     voltage *value) {
 
     if (type >= FEEDBACK_TYPE_COUNT) {

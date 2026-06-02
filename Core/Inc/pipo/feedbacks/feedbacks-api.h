@@ -22,7 +22,7 @@ enum FeedbacksReturnCode feedbacks_api_init(void);
  * \retval FEEDBACKS_RC_OK on success.
  * \retval FEEDBACKS_RC_OUT_OF_BOUNDS if the index is out of range.
  */
-enum FeedbacksReturnCode feedbacks_api_update_feedback(const enum FeedbackType type, const voltage value);
+enum FeedbacksReturnCode feedbacks_api_update_feedback(const enum FeedbacksType type, const voltage value);
 
 /*!
  * \brief Get the a feedback voltage voltage.
@@ -32,7 +32,7 @@ enum FeedbacksReturnCode feedbacks_api_update_feedback(const enum FeedbackType t
  * \retval FEEDBACKS_RC_INVALID_TYPE if the type does not exist.
  * \retval FEEDBACKS_RC_NULL_POINTER if value is null.
  */
-enum FeedbacksReturnCode lines_api_get_feedback(const enum FeedbackType type, voltage *value);
+enum FeedbacksReturnCode lines_api_get_feedback(const enum FeedbacksType type, voltage *value);
 
 /*!
  * \brief Get the a feedback voltage voltage.

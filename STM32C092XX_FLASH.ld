@@ -182,6 +182,15 @@ SECTIONS
     __bss_end__ = _ebss;
   } >RAM
 
+  . = ALIGN(4);
+  .tasks :
+  {
+      __tasks_start = .;
+      KEEP(*(.tasks))
+      __tasks_end = .;
+      . = ALIGN(4);
+  } > RAM
+
   /* User_heap_stack section, used to check that there is enough RAM left */
   ._user_heap_stack :
   {
@@ -202,6 +211,7 @@ SECTIONS
     libm.a ( * )
     libgcc.a ( * )
   }
+
 
 }
 

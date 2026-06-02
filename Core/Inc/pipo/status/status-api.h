@@ -28,10 +28,8 @@ enum StatusReturnCode status_init(const status_led_write led_write);
  * This function updates LED behavior based on the current status mode
  * and internal timing (e.g. blinking patterns). It should be called
  * periodically from the main loop or scheduler.
- *
- * \retval STATUS_RC_OK on success.
  */
-enum StatusReturnCode status_routine(void);
+void status_routine(void);
 
 /*!
  * \brief Sets the current system status mode.
