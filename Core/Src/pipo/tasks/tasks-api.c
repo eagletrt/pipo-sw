@@ -35,7 +35,11 @@ void tasks_routine(void) {
                 current_task->callback();
             }
         }
-    }
 
+        current_task++;
+    }
+}
+
+void tasks_tick(void) {
     handler.current_tick++;
 }
