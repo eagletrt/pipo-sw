@@ -72,4 +72,27 @@ void MX_GPIO_Init(void) {
 
 /* USER CODE BEGIN 2 */
 
+void led_write_bitmap(status_led_bitmap bitmap) {
+
+    GPIO_TypeDef *leds_gpios[] = {
+        STATUS_1_GPIO_Port,
+        STATUS_2_GPIO_Port,
+        STATUS_3_GPIO_Port,
+    };
+
+    uint16_t leds_pins[] = {
+        STATUS_1_Pin,
+        STATUS_2_Pin,
+        STATUS_3_Pin,
+    };
+
+    for (size_t i = 0; i < sizeof(leds_gpios) / sizeof(GPIO_TypeDef *); i++) {
+        if (((bitmap >> i) & 1) == 1) {
+            HAL_GPIO_WritePin(leds_gpios[i], leds_pins[i], GPIO_PIN_SET);
+        } else {
+            HAL_GPIO_WritePin(leds_gpios[i], leds_pins[i], GPIO_PIN_RESET);
+        }
+    }
+}
+
 /* USER CODE END 2 */

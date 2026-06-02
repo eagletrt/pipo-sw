@@ -20,11 +20,15 @@
 #include "main.h"
 #include "adc.h"
 #include "fdcan.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+
+#include "post-api.h"
+#include "tasks-api.h"
 
 /* USER CODE END Includes */
 
@@ -94,6 +98,10 @@ int main(void) {
 
     /* USER CODE BEGIN SysInit */
 
+    struct PostInitData init_data = {
+        .led_write = led_write_bitmap
+    };
+
     /* USER CODE END SysInit */
 
     /* Initialize all configured peripherals */
@@ -101,17 +109,19 @@ int main(void) {
     MX_ADC1_Init();
     MX_FDCAN1_Init();
     MX_USART1_UART_Init();
+    MX_TIM1_Init();
     /* USER CODE BEGIN 2 */
+
+    post_run(&init_data);
 
     /* USER CODE END 2 */
 
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
     while (1) {
-        // HAL_GPIO_WritePin(STATUS_3_GPIO_Port, STATUS_3_Pin, GPIO_PIN_SET);
 
-        HAL_GPIO_TogglePin(STATUS_3_GPIO_Port, STATUS_3_Pin);
-        HAL_Delay(1000);
+        tasks_routine();
+
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */
