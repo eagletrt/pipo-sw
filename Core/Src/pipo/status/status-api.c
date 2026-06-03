@@ -7,20 +7,15 @@
 
 #include "status-api.h"
 #include "eagletrt.h"
+#include "status.h"
 #include "tasks.h"
+#include "usart.h"
 
 #include <stddef.h>
 #include <string.h>
 
 #define ANIMATION_END 0xff
 #define ANIMATION_MAX_LENGTH 16
-
-struct TasksTask status_task __attribute__((section(".tasks"))) = {
-    .start_delay = 0,
-    .period = 200,
-    .last_execution = 0,
-    .callback = status_routine,
-};
 
 EAGLETRT_STATIC const uint8_t animation_bitmaps[STATUS_TYPE_COUNT][ANIMATION_MAX_LENGTH] = {
     [STATUS_TYPE_IDLE] = { 0x00, 0x01, 0x02, 0x04, ANIMATION_END },
@@ -68,3 +63,10 @@ void status_routine(void) {
     handler.led_write(
         animation_bitmaps[handler.status][handler.animation_index++]);
 }
+
+struct TasksTask status_task __attribute__((section(".tasks"), aligned(sizeof(void *)))) = {
+    .start_delay = 0,
+    .period = 200,
+    .last_execution = 0,
+    .callback = status_routine,
+};

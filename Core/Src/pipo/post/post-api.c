@@ -9,7 +9,7 @@
 #include "status-api.h"
 #include "eagletrt-api.h"
 
-static enum PostReturnCode prv_post_module_init(const struct PostInitData *data) {
+EAGLETRT_STATIC enum PostReturnCode prv_post_module_init(const struct PostInitData *data) {
 
     EAGLETRT_API_UNUSED(status_init(data->led_write));
 

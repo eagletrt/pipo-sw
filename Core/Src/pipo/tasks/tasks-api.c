@@ -8,6 +8,7 @@
 #include "tasks-api.h"
 #include "eagletrt.h"
 #include "tasks.h"
+#include "usart.h"
 
 #include <string.h>
 
@@ -27,8 +28,9 @@ void tasks_routine(void) {
 
     struct TasksTask *current_task = &__tasks_start;
 
-    while (current_task <= &__tasks_end) {
-        if (handler.current_tick - current_task->last_execution >= current_task->period) {
+    while (current_task < &__tasks_end) {
+        if ((handler.current_tick - current_task->last_execution) >= current_task->period) {
+
             current_task->last_execution = handler.current_tick;
 
             if (current_task->callback != nullptr) {

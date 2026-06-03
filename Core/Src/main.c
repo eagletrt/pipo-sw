@@ -20,6 +20,7 @@
 #include "main.h"
 #include "adc.h"
 #include "fdcan.h"
+#include "stm32c0xx_hal_tim.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -113,6 +114,7 @@ int main(void) {
     /* USER CODE BEGIN 2 */
 
     post_run(&init_data);
+    HAL_TIM_Base_Start_IT(&htim1);
 
     /* USER CODE END 2 */
 
