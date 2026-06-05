@@ -29,6 +29,7 @@ enum FeedbacksReturnCode {
  */
 enum FeedbacksType {
     FEEDBACK_TYPE_5V = 0x00,     /*!< 5 V supply feedback signal */
+    FEEDBACK_TYPE_ASMS,          /*!< ASMS (Autonomous System Master Switch) feedback*/
     FEEDBACK_TYPE_RES_GO,        /*!< RES (Reset Enable Signal) GO feedback */
     FEEDBACK_TYPE_SHUTDOWN_BSPD, /*!< BSPD shutdown circuit feedback */
     FEEDBACK_TYPE_SHUTDOWN_TSMS, /*!< TSMS shutdown circuit feedback */

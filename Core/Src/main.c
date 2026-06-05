@@ -19,8 +19,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "adc.h"
+#include "dma.h"
 #include "fdcan.h"
-#include "stm32c0xx_hal_tim.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -100,20 +100,24 @@ int main(void) {
     /* USER CODE BEGIN SysInit */
 
     struct PostInitData init_data = {
-        .led_write = led_write_bitmap
+        .led_write = led_write_bitmap,
+        .read_voltages = adc_signals_start_conversion,
+        .mux_set = mux_set_address
     };
 
     /* USER CODE END SysInit */
 
     /* Initialize all configured peripherals */
     MX_GPIO_Init();
+    MX_DMA_Init();
     MX_ADC1_Init();
     MX_FDCAN1_Init();
     MX_USART1_UART_Init();
     MX_TIM1_Init();
     /* USER CODE BEGIN 2 */
 
-    post_run(&init_data);
+    post_api_run(&init_data);
+
     HAL_TIM_Base_Start_IT(&htim1);
 
     /* USER CODE END 2 */
@@ -122,7 +126,7 @@ int main(void) {
     /* USER CODE BEGIN WHILE */
     while (1) {
 
-        tasks_routine();
+        tasks_api_routine();
 
         /* USER CODE END WHILE */
 

@@ -22,6 +22,6 @@
  * \retval POST_RC_OK on successful initialization.
  * \retval POST_RC_ERROR if one or more initialization steps fail.
  */
-enum PostReturnCode post_run(const struct PostInitData *data);
+enum PostReturnCode post_api_run(const struct PostInitData *data);
 
 #endif

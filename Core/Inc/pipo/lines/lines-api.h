@@ -25,18 +25,7 @@ enum LinesReturnCode lines_api_init(void);
  * \retval LINES_RC_OK on success.
  * \retval LINES_RC_OUT_OF_BOUNDS if the index is out of range.
  */
-enum LinesReturnCode lines_api_update_line_voltage(const size_t index, const voltage value);
-
-/*!
- * \brief Update lines' voltage.
- * \param[in] index The line index.
- * \param[in] values The voltages of the lines in V.
- * \param[in] size The size of the values array.
- * \retval LINES_RC_OK on success.
- * \retval LINES_RC_OUT_OF_BOUNDS if the index + size is out of range.
- * \retval LINES_RC_NULL_POINTER if the values array is null.
- */
-enum LinesReturnCode lines_api_update_line_voltages(const size_t index, const voltage *values, const size_t size);
+enum LinesReturnCode lines_api_update_line_voltage(const enum LinesIndex index, const voltage value);
 
 /*!
  * \brief Update a line current.
@@ -45,18 +34,7 @@ enum LinesReturnCode lines_api_update_line_voltages(const size_t index, const vo
  * \retval LINES_RC_OK on success.
  * \retval LINES_RC_OUT_OF_BOUNDS if the index is out of range.
  */
-enum LinesReturnCode lines_api_update_line_current(const size_t index, const current value);
-
-/*!
- * \brief Update lines' current.
- * \param[in] index The line index.
- * \param[in] values The currents of the lines in A.
- * \param[in] size The size of the values array.
- * \retval LINES_RC_OK on success.
- * \retval LINES_RC_OUT_OF_BOUNDS if the index + size is out of range.
- * \retval LINES_RC_NULL_POINTER if the values array is null.
- */
-enum LinesReturnCode lines_api_update_line_currents(const size_t index, const current *values, const size_t size);
+enum LinesReturnCode lines_api_update_line_current(const enum LinesIndex index, const current value);
 
 /*!
  * \brief Get a line voltage.
@@ -66,7 +44,7 @@ enum LinesReturnCode lines_api_update_line_currents(const size_t index, const cu
  * \retval LINES_RC_OUT_OF_BOUNDS if the index is out of range.
  * \retval LINES_RC_NULL_POINTER if value is null.
  */
-enum LinesReturnCode lines_api_get_line_voltage(const size_t index, voltage *value);
+enum LinesReturnCode lines_api_get_line_voltage(const enum LinesIndex index, voltage *value);
 
 /*!
  * \brief Get the line voltages array.
@@ -84,7 +62,7 @@ const voltage *lines_api_get_line_voltages(size_t *size);
  * \retval LINES_RC_OUT_OF_BOUNDS if the index is out of range.
  * \retval LINES_RC_NULL_POINTER if value is null.
  */
-enum LinesReturnCode lines_api_get_line_current(const size_t index, current *value);
+enum LinesReturnCode lines_api_get_line_current(const enum LinesIndex index, current *value);
 
 /*!
  * \brief Get the line currents array.

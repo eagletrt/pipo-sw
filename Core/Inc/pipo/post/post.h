@@ -8,6 +8,7 @@
 #ifndef POST_H
 #define POST_H
 
+#include "acquisition.h"
 #include "status.h"
 
 /*!
@@ -26,6 +27,8 @@ enum PostReturnCode {
  */
 struct PostInitData {
     status_led_write led_write; /*!< Callback used to update the status LEDs */
+    acquisition_start_callback read_voltages;
+    acquisition_mux_address_callback mux_set;
 };
 
 #endif

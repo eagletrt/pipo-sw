@@ -23,6 +23,8 @@
 
 /* USER CODE BEGIN 0 */
 
+#include "acquisition.h"
+#include "eagletrt.h"
 #include "usart.h"
 
 /* USER CODE END 0 */
@@ -89,11 +91,28 @@ void led_write_bitmap(status_led_bitmap bitmap) {
     };
 
     for (size_t i = 0; i < sizeof(leds_gpios) / sizeof(GPIO_TypeDef *); i++) {
-        if (((bitmap >> i) & 1) == 1) {
-            HAL_GPIO_WritePin(leds_gpios[i], leds_pins[i], GPIO_PIN_SET);
-        } else {
-            HAL_GPIO_WritePin(leds_gpios[i], leds_pins[i], GPIO_PIN_RESET);
-        }
+        HAL_GPIO_WritePin(leds_gpios[i], leds_pins[i], (bitmap >> i) & 1);
+    }
+}
+
+void mux_set_address(mux_address address) {
+
+    GPIO_TypeDef *mux_address_gpios[] = {
+        MUX_A0_GPIO_Port,
+        MUX_A1_GPIO_Port,
+        MUX_A2_GPIO_Port,
+        MUX_A3_GPIO_Port,
+    };
+
+    uint16_t mux_address_pins[] = {
+        MUX_A0_Pin,
+        MUX_A1_Pin,
+        MUX_A2_Pin,
+        MUX_A3_Pin,
+    };
+
+    for (size_t i = 0; i < sizeof(mux_address_gpios) / sizeof(GPIO_TypeDef *); i++) {
+        HAL_GPIO_WritePin(mux_address_gpios[i], mux_address_pins[i], (address >> i) & 1);
     }
 }
 

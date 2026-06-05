@@ -20,16 +20,7 @@
  * \retval STATUS_RC_NULL_POINTER if the write_callback argument is null.
  * \retval STATUS_RC_OK on successful initialization.
  */
-enum StatusReturnCode status_init(const status_led_write led_write);
-
-/*!
- * \brief Executes the status update routine.
- *
- * This function updates LED behavior based on the current status mode
- * and internal timing (e.g. blinking patterns). It should be called
- * periodically from the main loop or scheduler.
- */
-void status_routine(void);
+enum StatusReturnCode status_api_init(const status_led_write led_write);
 
 /*!
  * \brief Sets the current system status mode.
@@ -41,6 +32,6 @@ void status_routine(void);
  * \retval STATUS_RC_INVALID_TYPE if the status does not exist.
  * \retval STATUS_RC_OK on success.
  */
-enum StatusReturnCode status_set_status(const enum StatusType status);
+enum StatusReturnCode status_api_set_status(const enum StatusType status);
 
 #endif

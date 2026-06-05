@@ -17,14 +17,14 @@ extern struct TasksTask __tasks_end;
 
 EAGLETRT_STATIC struct TasksHandler handler;
 
-enum TasksReturnCode tasks_init(void) {
+enum TasksReturnCode tasks_api_init(void) {
 
     memset(&handler, 0, sizeof(handler));
 
     return TASKS_RC_OK;
 }
 
-void tasks_routine(void) {
+void tasks_api_routine(void) {
 
     struct TasksTask *current_task = &__tasks_start;
 
@@ -42,6 +42,6 @@ void tasks_routine(void) {
     }
 }
 
-void tasks_tick(void) {
+void tasks_api_tick(void) {
     handler.current_tick++;
 }

@@ -42,6 +42,8 @@ void MX_ADC1_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 
+void adc_signals_start_conversion();
+
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

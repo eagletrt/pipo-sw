@@ -7,18 +7,22 @@
 
 #include "post-api.h"
 #include "status-api.h"
+#include "acquisition-api.h"
+
 #include "eagletrt-api.h"
 
 EAGLETRT_STATIC enum PostReturnCode prv_post_module_init(const struct PostInitData *data) {
 
-    EAGLETRT_API_UNUSED(status_init(data->led_write));
+    EAGLETRT_API_UNUSED(status_api_init(data->led_write));
+    EAGLETRT_API_UNUSED(acquisition_api_init(data->read_voltages, data->mux_set));
 
     return POST_RC_OK;
 }
 
-enum PostReturnCode post_run(const struct PostInitData *data) {
+enum PostReturnCode post_api_run(const struct PostInitData *data) {
 
-    if (data->led_write == nullptr)
+    if (data->led_write == nullptr ||
+        data->read_voltages == nullptr)
         return POST_RC_ERROR;
 
     return prv_post_module_init(data);

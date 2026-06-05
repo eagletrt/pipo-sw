@@ -26,7 +26,7 @@ EAGLETRT_STATIC const uint8_t animation_bitmaps[STATUS_TYPE_COUNT][ANIMATION_MAX
 /* Internal module state */
 EAGLETRT_STATIC struct StatusHandler handler;
 
-enum StatusReturnCode status_init(status_led_write led_write) {
+enum StatusReturnCode status_api_init(status_led_write led_write) {
 
     if (led_write == NULL)
         return STATUS_RC_NULL_POINTER;
@@ -39,7 +39,7 @@ enum StatusReturnCode status_init(status_led_write led_write) {
     return STATUS_RC_OK;
 }
 
-enum StatusReturnCode status_set_status(enum StatusType status) {
+enum StatusReturnCode status_api_set_status(enum StatusType status) {
     if (status >= STATUS_TYPE_COUNT) {
         return STATUS_RC_INVALID_TYPE;
     }
@@ -52,8 +52,7 @@ enum StatusReturnCode status_set_status(enum StatusType status) {
     return STATUS_RC_OK;
 }
 
-void status_routine(void) {
-
+EAGLETRT_STATIC void prv_status_routine(void) {
     if (animation_bitmaps[handler.status][handler.animation_index] == ANIMATION_END) {
         // If the animation is ended reset the animation index
         handler.animation_index = 0;
@@ -68,5 +67,5 @@ struct TasksTask status_task __attribute__((section(".tasks"), aligned(sizeof(vo
     .start_delay = 0,
     .period = 200,
     .last_execution = 0,
-    .callback = status_routine,
+    .callback = prv_status_routine,
 };

@@ -7,8 +7,9 @@
 
 #include "lines-api.h"
 #include "eagletrt.h"
-
 #include <string.h>
+#include "usart.h"
+#include "tasks.h"
 
 EAGLETRT_STATIC struct LinesHandler handler;
 
@@ -19,7 +20,7 @@ enum LinesReturnCode lines_api_init(void) {
 }
 
 enum LinesReturnCode lines_api_update_line_voltage(
-    const size_t index,
+    const enum LinesIndex index,
     const voltage value) {
 
     if (index >= LINES_INDEX_COUNT) {
@@ -31,29 +32,8 @@ enum LinesReturnCode lines_api_update_line_voltage(
     return LINES_RC_OK;
 }
 
-enum LinesReturnCode lines_api_update_line_voltages(
-    const size_t index,
-    const voltage *values,
-    const size_t size) {
-
-    if (values == NULL) {
-        return LINES_RC_ERROR;
-    }
-
-    if ((index + size) > LINES_INDEX_COUNT) {
-        return LINES_RC_OUT_OF_BOUNDS;
-    }
-
-    memcpy(
-        &handler.lines_voltage[index],
-        values,
-        size * sizeof(*values));
-
-    return LINES_RC_OK;
-}
-
 enum LinesReturnCode lines_api_update_line_current(
-    const size_t index,
+    const enum LinesIndex index,
     const current value) {
 
     if (index >= LINES_INDEX_COUNT) {
@@ -61,27 +41,6 @@ enum LinesReturnCode lines_api_update_line_current(
     }
 
     handler.lines_current[index] = value;
-
-    return LINES_RC_OK;
-}
-
-enum LinesReturnCode lines_api_update_line_currents(
-    const size_t index,
-    const current *values,
-    const size_t size) {
-
-    if (values == NULL) {
-        return LINES_RC_ERROR;
-    }
-
-    if ((index + size) > LINES_INDEX_COUNT) {
-        return LINES_RC_OUT_OF_BOUNDS;
-    }
-
-    memcpy(
-        &handler.lines_current[index],
-        values,
-        size * sizeof(*values));
 
     return LINES_RC_OK;
 }
@@ -103,7 +62,7 @@ const current *lines_api_get_line_currents(size_t *size) {
 }
 
 enum LinesReturnCode lines_api_get_line_voltage(
-    const size_t index,
+    const enum LinesIndex index,
     voltage *value) {
 
     if (value == NULL) {
@@ -119,7 +78,7 @@ enum LinesReturnCode lines_api_get_line_voltage(
 }
 
 enum LinesReturnCode lines_api_get_line_current(
-    const size_t index,
+    const enum LinesIndex index,
     current *value) {
 
     if (value == NULL) {

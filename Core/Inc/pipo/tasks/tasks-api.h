@@ -18,7 +18,7 @@
  *
  * \return TASKS_RC_OK on successful initialization.
  */
-enum TasksReturnCode tasks_init(void);
+enum TasksReturnCode tasks_api_init(void);
 
 /*!
  * \brief Executes the task scheduler routine.
@@ -29,7 +29,7 @@ enum TasksReturnCode tasks_init(void);
  *
  * \note This function must be kept fast and non-blocking.
  */
-void tasks_routine(void);
+void tasks_api_routine(void);
 
 /*!
  * \brief Increments the system tick counter.
@@ -41,6 +41,6 @@ void tasks_routine(void);
  * \note Must be called from a time-critical interrupt context.
  * \note Should remain as short as possible (increment only).
  */
-void tasks_tick(void);
+void tasks_api_tick(void);
 
 #endif
