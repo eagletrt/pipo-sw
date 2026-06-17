@@ -25,6 +25,8 @@
 
 #include "acquisition.h"
 #include "eagletrt.h"
+#include "stm32c0xx.h"
+#include "stm32c0xx_hal_gpio.h"
 #include "usart.h"
 
 /* USER CODE END 0 */
@@ -112,7 +114,7 @@ void mux_set_address(mux_address address) {
     };
 
     for (size_t i = 0; i < sizeof(mux_address_gpios) / sizeof(GPIO_TypeDef *); i++) {
-        HAL_GPIO_WritePin(mux_address_gpios[i], mux_address_pins[i], (address >> i) & 1);
+        HAL_GPIO_WritePin(mux_address_gpios[i], mux_address_pins[i], ((address >> i) & 1) ? GPIO_PIN_SET : GPIO_PIN_RESET);
     }
 }
 

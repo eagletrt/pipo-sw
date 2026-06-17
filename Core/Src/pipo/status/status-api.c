@@ -6,10 +6,10 @@
  */
 
 #include "status-api.h"
+
+#include "task-api.h"
 #include "eagletrt.h"
 #include "status.h"
-#include "tasks.h"
-#include "usart.h"
 
 #include <stddef.h>
 #include <string.h>
@@ -63,9 +63,4 @@ EAGLETRT_STATIC void prv_status_routine(void) {
         animation_bitmaps[handler.status][handler.animation_index++]);
 }
 
-struct TasksTask status_task __attribute__((section(".tasks"), aligned(sizeof(void *)))) = {
-    .start_delay = 0,
-    .period = 200,
-    .last_execution = 0,
-    .callback = prv_status_routine,
-};
+TASK_API_REGISTER(status_task, 0, 200, prv_status_routine);

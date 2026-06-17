@@ -4,19 +4,25 @@
  * \date 2026-06-02
  * \brief Module for ADC acquisition and signal sampling
  */
-
 #ifndef ACQUISITION_H
 #define ACQUISITION_H
 
+#include "lines.h"
+#include "feedbacks.h"
+
 #include <stdint.h>
 
+/*! \brief Total number of physical ADC channels managed by the acquisition module */
 #define ACQUISITION_CHANNELS 10U
 
-typedef uint32_t voltage_raw;
-typedef float voltage;
-typedef uint8_t mux_address;
+typedef uint16_t voltage_raw; /*!< Raw ADC count as returned by the hardware */
+typedef float voltage;        /*!< Converted voltage value in V */
+typedef uint8_t mux_address;  /*!< Multiplexer address index */
 
+/*! \brief Callback to trigger a new ADC acquisition burst */
 typedef void (*acquisition_start_callback)();
+
+/*! \brief Callback to set the active multiplexer address */
 typedef void (*acquisition_mux_address_callback)(mux_address address);
 
 /*!
@@ -30,20 +36,63 @@ enum AcquisitionReturnCode {
 };
 
 /*!
+ * \brief Destination module for an acquired channel value.
+ *
+ * Determines which module the value is forwarded to on publish.
+ */
+enum AcquisitionDestinationType {
+    ACQUISITION_DESTINATION_TYPE_FEEDBACK,     /*!< Voltage feedback signal, forwarded to the feedbacks module */
+    ACQUISITION_DESTINATION_TYPE_LINE_VOLTAGE, /*!< Power line voltage, forwarded to the lines module */
+    ACQUISITION_DESTINATION_TYPE_LINE_CURRENT, /*!< Power line current, forwarded to the lines module */
+};
+
+/*!
+ * \brief Multiplexer identity for a channel.
+ *
+ * Indicates which physical mux drives the channel, or NONE for direct ADC channels.
+ */
+enum AcquisitionMuxType {
+    ACQUISITION_MUX_TYPE_1,    /*!< Channel is driven by multiplexer 1 (line voltages) */
+    ACQUISITION_MUX_TYPE_2,    /*!< Channel is driven by multiplexer 2 (line currents / last address feedback) */
+    ACQUISITION_MUX_TYPE_NONE, /*!< Channel is a direct ADC input, not multiplexed */
+};
+
+/*!
+ * \brief Resolved destination for a single acquired value.
+ *
+ * Pairs the destination module type with the specific index within that module.
+ */
+struct AcquisitionDestination {
+    enum AcquisitionDestinationType type; /*!< Which module to forward the value to */
+    union {
+        enum FeedbacksType feedback; /*!< Target feedback index, used when type is FEEDBACK */
+        enum LinesIndex line;        /*!< Target line index, used when type is LINE_VOLTAGE or LINE_CURRENT */
+    } index;                         /*!< Destination index within the target module */
+};
+
+/*!
+ * \brief Static descriptor for a single physical ADC channel.
+ *
+ * Encodes whether the channel is multiplexed and where its value is published
+ * on oversample completion. One entry per physical channel in the channel map.
+ */
+struct AcquisitionChannel {
+    enum AcquisitionMuxType mux;               /*!< Mux assignment for this channel */
+    struct AcquisitionDestination destination; /*!< Publish destination module and index */
+};
+
+/*!
  * \brief Internal state of the acquisition module.
  *
  * Stores acquisition callbacks, filtered channel data,
  * sample counters, and multiplexer state.
  */
 struct AcquisitionHandler {
-
     acquisition_start_callback read_voltages;         /*!< ADC acquisition callback */
-    acquisition_mux_address_callback set_mux_address; /*!< Mux address callback */
-
-    voltage acquired_data[ACQUISITION_CHANNELS]; /*!< Acquired channel voltages in V */
-    uint32_t sample_count[ACQUISITION_CHANNELS]; /*!< Sample count per channel */
-
-    mux_address mux_address; /*!< Current mux address */
+    acquisition_mux_address_callback set_mux_address; /*!< Mux address setter callback */
+    voltage acquired_data[ACQUISITION_CHANNELS];      /*!< Oversampled channel voltages in V */
+    uint32_t sample_count[ACQUISITION_CHANNELS];      /*!< Number of samples accumulated per channel */
+    mux_address mux_address;                          /*!< Mux address to be applied at the next acquisition cycle */
 };
 
 #endif /* ACQUISITION_H */

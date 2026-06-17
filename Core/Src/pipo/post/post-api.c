@@ -22,7 +22,8 @@ EAGLETRT_STATIC enum PostReturnCode prv_post_module_init(const struct PostInitDa
 enum PostReturnCode post_api_run(const struct PostInitData *data) {
 
     if (data->led_write == nullptr ||
-        data->read_voltages == nullptr)
+        data->read_voltages == nullptr ||
+        data->mux_set == nullptr)
         return POST_RC_ERROR;
 
     return prv_post_module_init(data);

@@ -22,7 +22,7 @@
 
 /* USER CODE BEGIN 0 */
 
-#include "tasks-api.h"
+#include "timebase-api.h"
 #include "usart.h"
 
 /* USER CODE END 0 */
@@ -106,7 +106,7 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef *tim_baseHandle) {
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     if (htim->Instance == htim1.Instance) {
-        tasks_api_tick();
+        timebase_api_tick();
     }
 }
 

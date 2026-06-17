@@ -49,7 +49,6 @@ enum AcquisitionReturnCode acquisition_api_init(
  */
 enum AcquisitionReturnCode acquisition_api_handle_data(
     const voltage_raw *data,
-    const size_t length,
-    const size_t offset);
+    const size_t length);
 
 #endif

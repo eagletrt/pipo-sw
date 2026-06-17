@@ -25,6 +25,7 @@
 #include "acquisition-api.h"
 #include "acquisition.h"
 #include "eagletrt-api.h"
+#include "stm32c0xx_hal_adc.h"
 #include "usart.h"
 
 /* USER CODE END 0 */
@@ -55,14 +56,18 @@ void MX_ADC1_Init(void) {
     hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
     hadc1.Init.LowPowerAutoWait = DISABLE;
     hadc1.Init.LowPowerAutoPowerOff = DISABLE;
-    hadc1.Init.ContinuousConvMode = ENABLE;
+    hadc1.Init.ContinuousConvMode = DISABLE;
     hadc1.Init.NbrOfConversion = 1;
+    hadc1.Init.DiscontinuousConvMode = DISABLE;
     hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
     hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
-    hadc1.Init.DMAContinuousRequests = ENABLE;
+    hadc1.Init.DMAContinuousRequests = DISABLE;
     hadc1.Init.Overrun = ADC_OVR_DATA_PRESERVED;
-    hadc1.Init.SamplingTimeCommon1 = ADC_SAMPLETIME_1CYCLE_5;
-    hadc1.Init.OversamplingMode = DISABLE;
+    hadc1.Init.SamplingTimeCommon1 = ADC_SAMPLETIME_7CYCLES_5;
+    hadc1.Init.OversamplingMode = ENABLE;
+    hadc1.Init.Oversampling.Ratio = ADC_OVERSAMPLING_RATIO_8;
+    hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_3;
+    hadc1.Init.Oversampling.TriggeredMode = ADC_TRIGGEREDMODE_SINGLE_TRIGGER;
     hadc1.Init.TriggerFrequencyMode = ADC_TRIGGER_FREQ_HIGH;
     if (HAL_ADC_Init(&hadc1) != HAL_OK) {
         Error_Handler();
@@ -245,27 +250,17 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef *adcHandle) {
 
 /* USER CODE BEGIN 1 */
 
-EAGLETRT_STATIC uint32_t dma_data[ACQUISITION_CHANNELS];
+EAGLETRT_STATIC uint16_t dma_data[ACQUISITION_CHANNELS];
 
 void adc_signals_start_conversion() {
-    HAL_ADC_Start_DMA(&hadc1, dma_data, ACQUISITION_CHANNELS);
-}
-
-void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef *hadc) {
-
-    EAGLETRT_API_UNUSED(hadc);
-
-    acquisition_api_handle_data(dma_data, ACQUISITION_CHANNELS / 2, 0);
+    HAL_ADC_Start_DMA(&hadc1, (uint32_t *)dma_data, ACQUISITION_CHANNELS);
 }
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc) {
 
     EAGLETRT_API_UNUSED(hadc);
 
-    acquisition_api_handle_data(
-        &dma_data[ACQUISITION_CHANNELS / 2],
-        ACQUISITION_CHANNELS / 2,
-        ACQUISITION_CHANNELS / 2);
+    acquisition_api_handle_data(dma_data, ACQUISITION_CHANNELS);
 }
 
 /* USER CODE END 1 */

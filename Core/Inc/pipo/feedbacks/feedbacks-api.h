@@ -40,4 +40,4 @@ enum FeedbacksReturnCode lines_api_get_feedback(const enum FeedbacksType type, v
  * \note The value pointed by the size pointer won't be updated in case of null pointer
  * \return The autonomous system line voltage in V.
  */
-const voltage *lines_api_get_feedbacks(size_t *size);
+const voltage *feedbacks_api_get_feedbacks(size_t *size);

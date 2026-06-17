@@ -29,7 +29,7 @@
 /* USER CODE BEGIN Includes */
 
 #include "post-api.h"
-#include "tasks-api.h"
+#include "timebase-api.h"
 
 /* USER CODE END Includes */
 
@@ -116,6 +116,8 @@ int main(void) {
     MX_TIM1_Init();
     /* USER CODE BEGIN 2 */
 
+    HAL_ADCEx_Calibration_Start(&hadc1);
+
     post_api_run(&init_data);
 
     HAL_TIM_Base_Start_IT(&htim1);
@@ -126,7 +128,7 @@ int main(void) {
     /* USER CODE BEGIN WHILE */
     while (1) {
 
-        tasks_api_routine();
+        timebase_api_routine();
 
         /* USER CODE END WHILE */
 

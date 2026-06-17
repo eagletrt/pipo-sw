@@ -8,8 +8,6 @@
 #include "lines-api.h"
 #include "eagletrt.h"
 #include <string.h>
-#include "usart.h"
-#include "tasks.h"
 
 EAGLETRT_STATIC struct LinesHandler handler;
 
