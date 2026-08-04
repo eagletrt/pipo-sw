@@ -51,3 +51,4 @@ void adc_signals_start_conversion();
 #endif
 
 #endif /* __ADC_H__ */
+

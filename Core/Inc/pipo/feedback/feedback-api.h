@@ -5,7 +5,7 @@
  * \brief This module provides the APIs for the feedbacks module
  */
 
-#include "feedbacks.h"
+#include "feedback.h"
 
 #include <stddef.h>
 

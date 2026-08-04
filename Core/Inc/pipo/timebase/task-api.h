@@ -28,6 +28,7 @@
  */
 #define TASK_API_REGISTER(name, delay, task_period, task_callback) \
     struct Task name TASK_API_SECTION = {                          \
+        .active = true,                                            \
         .start_delay = (delay),                                    \
         .period = (task_period),                                   \
         .next_execution = 0,                                       \

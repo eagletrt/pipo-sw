@@ -57,3 +57,4 @@ void usart_log(const char *str);
 #endif
 
 #endif /* __USART_H__ */
+

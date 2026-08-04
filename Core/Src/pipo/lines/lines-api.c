@@ -11,6 +11,9 @@
 
 EAGLETRT_STATIC struct LinesHandler handler;
 
+#define VOLTAGE_FROM_DIVIDER(vout, r1, r2) \
+    ((vout) * (((r1) + (r2)) / (r2)))
+
 enum LinesReturnCode lines_api_init(void) {
     memset(&handler, 0, sizeof(handler));
 

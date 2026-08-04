@@ -8,6 +8,7 @@
 #include "eagletrt.h"
 #include "timebase.h"
 #include "task-api.h"
+#include "usart.h"
 
 #include <string.h>
 

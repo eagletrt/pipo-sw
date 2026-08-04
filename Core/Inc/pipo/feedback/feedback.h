@@ -8,7 +8,7 @@
 #ifndef FEEDBACKS_H
 #define FEEDBACKS_H
 
-typedef float voltage;
+#include "common.h"
 
 /*!
  * \brief Return codes for the feedbacks module APIs.

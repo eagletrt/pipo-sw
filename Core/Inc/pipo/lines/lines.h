@@ -8,8 +8,7 @@
 #ifndef LINES_H
 #define LINES_H
 
-typedef float voltage;
-typedef float current;
+#include "common.h"
 
 /*!
  * \brief Return codes for the lines module APIs.

@@ -5,8 +5,8 @@
  * \brief Implementation of the lines module APIs
  */
 
-#include "feedbacks.h"
-#include "feedbacks-api.h"
+#include "feedback.h"
+#include "feedback-api.h"
 
 #include <string.h>
 

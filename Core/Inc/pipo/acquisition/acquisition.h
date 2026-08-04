@@ -7,16 +7,29 @@
 #ifndef ACQUISITION_H
 #define ACQUISITION_H
 
+#include "common.h"
 #include "lines.h"
-#include "feedbacks.h"
+#include "feedback.h"
 
 #include <stdint.h>
 
 /*! \brief Total number of physical ADC channels managed by the acquisition module */
 #define ACQUISITION_CHANNELS 10U
 
+#define MUX_MAX_ADDRESS 16U
+
+#define ADC12_TO_VOLTAGE(adc) ((float)(adc) * (3.3f / 4095.0f))
+
+#define VOLTAGE_FROM_DIVIDER(vout, r1, r2) \
+    ((vout) * (((r1) + (r2)) / (r2)))
+
+#define CURRENT_FROM_VOLTAGE_5A(voltage) \
+    voltage / 800.0f * 1000.0f
+
+#define CURRENT_FROM_VOLTAGE_20A(voltage) \
+    voltage / 200.0f * 1000.0f
+
 typedef uint16_t voltage_raw; /*!< Raw ADC count as returned by the hardware */
-typedef float voltage;        /*!< Converted voltage value in V */
 typedef uint8_t mux_address;  /*!< Multiplexer address index */
 
 /*! \brief Callback to trigger a new ADC acquisition burst */
@@ -41,9 +54,11 @@ enum AcquisitionReturnCode {
  * Determines which module the value is forwarded to on publish.
  */
 enum AcquisitionDestinationType {
-    ACQUISITION_DESTINATION_TYPE_FEEDBACK,     /*!< Voltage feedback signal, forwarded to the feedbacks module */
-    ACQUISITION_DESTINATION_TYPE_LINE_VOLTAGE, /*!< Power line voltage, forwarded to the lines module */
-    ACQUISITION_DESTINATION_TYPE_LINE_CURRENT, /*!< Power line current, forwarded to the lines module */
+    ACQUISITION_DESTINATION_TYPE_LINE_VOLTAGE,     /*!< Power line voltage, forwarded to the lines module */
+    ACQUISITION_DESTINATION_TYPE_LINE_CURRENT_5A,  /*!< Power line current 5A, forwarded to the lines module */
+    ACQUISITION_DESTINATION_TYPE_LINE_CURRENT_20A, /*!< Power line current 20A, forwarded to the lines module */
+    ACQUISITION_DESTINATION_TYPE_FEEDBACK_5V,      /*!< 5V feedback signal, forwarded to the feedbacks module */
+    ACQUISITION_DESTINATION_TYPE_FEEDBACK_24V,     /*!< 24V feedback signal, forwarded to the feedbacks module */
 };
 
 /*!
