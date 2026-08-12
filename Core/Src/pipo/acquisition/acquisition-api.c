@@ -381,7 +381,7 @@ enum AcquisitionReturnCode acquisition_api_handle_data(
     if (data == nullptr) {
         return ACQUISITION_RC_NULL_POINTER;
     }
-    
+
     if (length > ACQUISITION_CHANNELS) {
         return ACQUISITION_RC_OUT_OF_BOUNDS;
     }

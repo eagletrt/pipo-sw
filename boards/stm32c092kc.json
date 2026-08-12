@@ -4,20 +4,20 @@
         "cpu": "cortex-m0plus",
         "extra_flags": "-DSTM32C0 -DSTM32C092xx",
         "f_cpu": "48000000L",
-        "mcu": "stm32c092cctx",
+        "mcu": "stm32c092kctx",
         "product_line": "STM32C092xx"
     },
     "debug": {
         "default_tools": [
             "stlink"
         ],
-        "jlink_device": "STM32C092RCT6",
+        "jlink_device": "STM32C092KCT6",
         "onboard_tools": [
             "stlink"
         ],
         "openocd_board": "st_nucleo_c0",
         "openocd_target": "stm32c0x",
-        "svd_path": "STM32C092RCT6.svd"
+        "svd_path": "STM32C092KCT6.svd"
     },
     "frameworks": [
         "arduino",
@@ -26,10 +26,10 @@
         "stm32cube",
         "zephyr"
     ],
-    "name": "ST Nucleo C092RC",
+    "name": "ST Nucleo C092KC",
     "upload": {
         "maximum_ram_size": 12288,
-        "maximum_size": 32768,
+        "maximum_size": 256000,
         "protocol": "stlink",
         "protocols": [
             "jlink",
@@ -39,6 +39,6 @@
             "mbed"
         ]
     },
-    "url": "https://www.st.com/en/evaluation-tools/nucleo-c092rc.html",
+    "url": "https://www.st.com/en/evaluation-tools/nucleo-c092kc.html",
     "vendor": "ST"
 }

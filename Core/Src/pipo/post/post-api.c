@@ -6,17 +6,22 @@
  */
 
 #include "post-api.h"
+#include "can-communication-api.h"
+#include "can-communication.h"
+#include "post.h"
 #include "status-api.h"
 #include "acquisition-api.h"
 
 #include "eagletrt-api.h"
 
 EAGLETRT_STATIC enum PostReturnCode prv_post_module_init(const struct PostInitData *data) {
-
+    enum PostReturnCode return_code = POST_RC_OK;
+    if (can_communication_api_init(data->can_networks) != CAN_COMMUNICATION_RC_OK) {
+        return_code = POST_RC_ERROR;
+    }
     EAGLETRT_API_UNUSED(status_api_init(data->led_write));
     EAGLETRT_API_UNUSED(acquisition_api_init(data->read_voltages, data->mux_set));
-
-    return POST_RC_OK;
+    return return_code;
 }
 
 enum PostReturnCode post_api_run(const struct PostInitData *data) {

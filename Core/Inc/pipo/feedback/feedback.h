@@ -8,6 +8,7 @@
 #ifndef FEEDBACKS_H
 #define FEEDBACKS_H
 
+#include "can-primary.h"
 #include "common.h"
 
 /*!
@@ -46,6 +47,8 @@ enum FeedbacksType {
  */
 struct FeedbacksHandler {
     voltage feedbacks[FEEDBACK_TYPE_COUNT]; /*!< Feedback voltages in volts (V) */
+
+    union CanPrimaryMessages libcan_message_shutdown;
 };
 
 #endif

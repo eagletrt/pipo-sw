@@ -11,6 +11,8 @@
 #include "acquisition.h"
 #include "status.h"
 
+#include "can-communication.h"
+
 /*!
  * \brief Return codes for the POST module APIs.
  */
@@ -26,6 +28,8 @@ enum PostReturnCode {
  * parameters required during system initialization.
  */
 struct PostInitData {
+    struct CanCommunicationNetworkConfig can_networks[CAN_COMMUNICATION_NETWORK_COUNT]; /*!< Explicit configuration blocks for the system's physical CAN networks. */
+
     status_led_write led_write; /*!< Callback used to update the status LEDs */
     acquisition_start_callback read_voltages;
     acquisition_mux_address_callback mux_set;
