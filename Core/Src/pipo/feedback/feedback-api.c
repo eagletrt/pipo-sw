@@ -86,4 +86,4 @@ EAGLETRT_STATIC void prv_feedback_can_routine(void) {
     }
 }
 
-TASK_API_REGISTER(feedback_can_send_task, 5, can_primary_byte_size_piposhutdown, prv_feedback_can_routine);
+TASK_API_REGISTER(feedback_can_send_task, 5, can_primary_cycle_time_piposhutdown, prv_feedback_can_routine);

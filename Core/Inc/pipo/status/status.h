@@ -8,6 +8,7 @@
 #ifndef STATUS_H
 #define STATUS_H
 
+#include "can-primary.h"
 #include <stdint.h>
 
 /*!
@@ -64,6 +65,8 @@ struct StatusHandler {
     uint8_t animation_index; /*!< Current index of the active animation */
 
     status_led_write led_write; /*!< Hardware function used to update LEDs */
+
+    union CanPrimaryMessages libcan_message_status;
 };
 
 #endif

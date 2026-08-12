@@ -7,12 +7,17 @@
 
 #include "status-api.h"
 
-#include "task-api.h"
-#include "eagletrt.h"
-#include "status.h"
-
 #include <stddef.h>
 #include <string.h>
+
+#include "can-primary.h"
+#include "can-primary-api.h"
+#include "eagletrt.h"
+
+#include "can-communication.h"
+#include "can-communication-api.h"
+#include "task-api.h"
+#include "status.h"
 
 #define ANIMATION_END 0xff
 #define ANIMATION_MAX_LENGTH 16
@@ -63,4 +68,23 @@ EAGLETRT_STATIC void prv_status_routine(void) {
         animation_bitmaps[handler.status][handler.animation_index++]);
 }
 
+EAGLETRT_STATIC void prv_status_can_routine(void) {
+    struct CanCommunicationFrame frame = {
+        .id = CAN_PRIMARY_MESSAGE_FRAME_ID_PIPOFSM
+    };
+
+    struct CanPrimaryPipofsm *payload = &handler.libcan_message_status.pipofsm;
+    payload->status = handler.status;
+
+    int byte_size = can_primary_api_serialize_from_id(
+        frame.id,
+        &handler.libcan_message_status,
+        frame.data);
+    if (byte_size >= 0) {
+        frame.length = byte_size;
+        EAGLETRT_API_UNUSED(can_communication_api_add_to_tx(CAN_COMMUNICATION_NETWORK_PRIMARY, &frame));
+    }
+}
+
 TASK_API_REGISTER(status_task, 0, 200, prv_status_routine);
+TASK_API_REGISTER(status_can_send_task, 5, can_primary_cycle_time_pipofsm, prv_status_can_routine);
