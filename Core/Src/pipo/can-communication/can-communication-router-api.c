@@ -27,6 +27,7 @@ enum CanCommunicationReturnCode can_communication_router_api_receive_primary(str
     }
 
     switch (frame->id) {
+        // TODO: Implement dispatching for bootloader messages
         default:
             break;
     }

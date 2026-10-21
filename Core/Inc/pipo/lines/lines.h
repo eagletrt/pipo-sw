@@ -32,7 +32,7 @@ enum LinesReturnCode {
 enum LinesIndex {
 
     /* Low power domain */
-    LINES_INDEX_LP_MAIN = 0x00, /*!< Low power spare 1 */
+    LINES_INDEX_LP_MAIN = 0x00, /*!< Low power main */
     LINES_INDEX_LP_SPARE1,      /*!< Low power spare 1 */
     LINES_INDEX_LP_SPARE2,      /*!< Low power spare 2 */
     LINES_INDEX_DRIVER,         /*!< Low power driver supply */

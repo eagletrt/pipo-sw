@@ -17,9 +17,13 @@
 /*!
  * \brief Maximum payload size of a classic-CAN frame, in bytes.
  *
- * \details TODO: Should be defined by the libcan
+ * \details  FDCAN in classic mode is limited to 8 data bytes. The PAL queues
+ *     are sized off the raw-frame buffer that wraps this payload, so any
+ *     bump here automatically widens the internal staging buffers.
  */
 #define CAN_COMMUNICATION_FRAME_DATA_SIZE (8U)
+
+// TODO: Should be defined by the libcan
 
 /*!
  * \brief Size of the per-network reception queue.
@@ -59,7 +63,7 @@ enum CanCommunicationNetwork : uint8_t {
  */
 struct [[gnu::packed]] CanCommunicationFrame {
     uint32_t id;                                     /*!< CAN identifier (Standard 11-bit or Extended 29-bit) */
-    uint8_t length;                                  /*!< Count of valid data bytes within the array (0..8) */
+    uint8_t length;                                  /*!< Count of valid data bytes within the array 0..CAN_COMMUNICATIONS_FRAME_DATA_SIZE */
     uint8_t data[CAN_COMMUNICATION_FRAME_DATA_SIZE]; /*!< Raw payload byte buffer */
 };
 
