@@ -59,12 +59,12 @@ void test_lines_api_init_resets_state(void) {
 
 void test_lines_api_update_voltage_success(void) {
     enum LinesReturnCode rc =
-        lines_api_update_line_voltage(LINES_INDEX_LP_MAIN, 12.5f);
+        lines_api_update_line_voltage(LINES_INDEX_LOW_POWER_MAIN, 12.5f);
 
     TEST_ASSERT_EQUAL(LINES_RC_OK, rc);
 
     voltage value = 0.0f;
-    lines_api_get_line_voltage(LINES_INDEX_LP_MAIN, &value);
+    lines_api_get_line_voltage(LINES_INDEX_LOW_POWER_MAIN, &value);
 
     TEST_ASSERT_EQUAL_FLOAT(12.5f, value);
 }
@@ -80,12 +80,12 @@ void test_lines_api_update_voltage_out_of_bounds(void) {
 
 void test_lines_api_update_current_success(void) {
     enum LinesReturnCode rc =
-        lines_api_update_line_current(LINES_INDEX_HP_MAIN, 3.3f);
+        lines_api_update_line_current(LINES_INDEX_HIGH_POWER_MAIN, 3.3f);
 
     TEST_ASSERT_EQUAL(LINES_RC_OK, rc);
 
     current value = 0.0f;
-    lines_api_get_line_current(LINES_INDEX_HP_MAIN, &value);
+    lines_api_get_line_current(LINES_INDEX_HIGH_POWER_MAIN, &value);
 
     TEST_ASSERT_EQUAL_FLOAT(3.3f, value);
 }
@@ -101,7 +101,7 @@ void test_lines_api_update_current_out_of_bounds(void) {
 
 void test_lines_api_get_voltage_null_pointer(void) {
     enum LinesReturnCode rc =
-        lines_api_get_line_voltage(LINES_INDEX_LP_MAIN, NULL);
+        lines_api_get_line_voltage(LINES_INDEX_LOW_POWER_MAIN, NULL);
 
     TEST_ASSERT_EQUAL(LINES_RC_NULL_POINTER, rc);
 }
@@ -119,7 +119,7 @@ void test_lines_api_get_voltage_out_of_bounds(void) {
 
 void test_lines_api_get_current_null_pointer(void) {
     enum LinesReturnCode rc =
-        lines_api_get_line_current(LINES_INDEX_LP_MAIN, NULL);
+        lines_api_get_line_current(LINES_INDEX_LOW_POWER_MAIN, NULL);
 
     TEST_ASSERT_EQUAL(LINES_RC_NULL_POINTER, rc);
 }
@@ -166,14 +166,14 @@ void test_lines_api_get_current_array_and_size(void) {
 /* --- Test group: mixed updates consistency --- */
 
 void test_lines_api_voltage_current_independence(void) {
-    lines_api_update_line_voltage(LINES_INDEX_LP_MAIN, 5.0f);
-    lines_api_update_line_current(LINES_INDEX_LP_MAIN, 2.0f);
+    lines_api_update_line_voltage(LINES_INDEX_LOW_POWER_MAIN, 5.0f);
+    lines_api_update_line_current(LINES_INDEX_LOW_POWER_MAIN, 2.0f);
 
     voltage v = 0.0f;
     current c = 0.0f;
 
-    lines_api_get_line_voltage(LINES_INDEX_LP_MAIN, &v);
-    lines_api_get_line_current(LINES_INDEX_LP_MAIN, &c);
+    lines_api_get_line_voltage(LINES_INDEX_LOW_POWER_MAIN, &v);
+    lines_api_get_line_current(LINES_INDEX_LOW_POWER_MAIN, &c);
 
     TEST_ASSERT_EQUAL_FLOAT(5.0f, v);
     TEST_ASSERT_EQUAL_FLOAT(2.0f, c);

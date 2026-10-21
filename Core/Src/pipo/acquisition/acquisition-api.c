@@ -16,22 +16,22 @@ static const struct AcquisitionDestination mux2_map[] = {
 
     [0] = {
         .type = ACQUISITION_DESTINATION_TYPE_LINE_VOLTAGE,
-        .index.line = LINES_INDEX_LVBAT,
+        .index.line = LINES_INDEX_LOW_VOLTAGE_BATTERY,
     },
 
     [1] = {
         .type = ACQUISITION_DESTINATION_TYPE_LINE_VOLTAGE,
-        .index.line = LINES_INDEX_COOL_LT,
+        .index.line = LINES_INDEX_COOL_LOW_TEMPERATURE,
     },
 
     [2] = {
         .type = ACQUISITION_DESTINATION_TYPE_LINE_VOLTAGE,
-        .index.line = LINES_INDEX_COOL_HT,
+        .index.line = LINES_INDEX_COOL_HIGH_TEMPERATURE,
     },
 
     [3] = {
         .type = ACQUISITION_DESTINATION_TYPE_LINE_VOLTAGE,
-        .index.line = LINES_INDEX_HP_SPARE,
+        .index.line = LINES_INDEX_HIGH_POWER_SPARE,
     },
 
     [4] = {
@@ -41,32 +41,32 @@ static const struct AcquisitionDestination mux2_map[] = {
 
     [5] = {
         .type = ACQUISITION_DESTINATION_TYPE_LINE_VOLTAGE,
-        .index.line = LINES_INDEX_PC,
+        .index.line = LINES_INDEX_PRECHARGE,
     },
 
     [6] = {
         .type = ACQUISITION_DESTINATION_TYPE_LINE_VOLTAGE,
-        .index.line = LINES_INDEX_AS_EBS,
+        .index.line = LINES_INDEX_AUTONOMOUS_EMERGENCY_BRAKE_SYSTEM,
     },
 
     [7] = {
         .type = ACQUISITION_DESTINATION_TYPE_LINE_VOLTAGE,
-        .index.line = LINES_INDEX_AS_STEER,
+        .index.line = LINES_INDEX_AUTONOMOUS_STEER,
     },
 
     [8] = {
         .type = ACQUISITION_DESTINATION_TYPE_LINE_VOLTAGE,
-        .index.line = LINES_INDEX_SD,
+        .index.line = LINES_INDEX_SHUTDOWN,
     },
 
     [9] = {
         .type = ACQUISITION_DESTINATION_TYPE_LINE_VOLTAGE,
-        .index.line = LINES_INDEX_LP_SPARE1,
+        .index.line = LINES_INDEX_LOW_POWER_SPARE1,
     },
 
     [10] = {
         .type = ACQUISITION_DESTINATION_TYPE_LINE_VOLTAGE,
-        .index.line = LINES_INDEX_LP_SPARE2,
+        .index.line = LINES_INDEX_LOW_POWER_SPARE2,
     },
 
     [11] = {
@@ -81,17 +81,17 @@ static const struct AcquisitionDestination mux2_map[] = {
 
     [13] = {
         .type = ACQUISITION_DESTINATION_TYPE_LINE_VOLTAGE,
-        .index.line = LINES_INDEX_PWRTRAIN,
+        .index.line = LINES_INDEX_POWERTRAIN,
     },
 
     [14] = {
         .type = ACQUISITION_DESTINATION_TYPE_LINE_VOLTAGE,
-        .index.line = LINES_INDEX_TLM,
+        .index.line = LINES_INDEX_TELEMETRY,
     },
 
     [15] = {
         .type = ACQUISITION_DESTINATION_TYPE_LINE_VOLTAGE,
-        .index.line = LINES_INDEX_LP_MAIN,
+        .index.line = LINES_INDEX_LOW_POWER_MAIN,
     },
 };
 
@@ -99,22 +99,22 @@ static const struct AcquisitionDestination mux1_map[] = {
 
     [0] = {
         .type = ACQUISITION_DESTINATION_TYPE_LINE_CURRENT_5A,
-        .index.line = LINES_INDEX_LVBAT,
+        .index.line = LINES_INDEX_LOW_VOLTAGE_BATTERY,
     },
 
     [1] = {
         .type = ACQUISITION_DESTINATION_TYPE_LINE_CURRENT_20A,
-        .index.line = LINES_INDEX_COOL_LT,
+        .index.line = LINES_INDEX_COOL_LOW_TEMPERATURE,
     },
 
     [2] = {
         .type = ACQUISITION_DESTINATION_TYPE_LINE_CURRENT_20A,
-        .index.line = LINES_INDEX_COOL_HT,
+        .index.line = LINES_INDEX_COOL_HIGH_TEMPERATURE,
     },
 
     [3] = {
         .type = ACQUISITION_DESTINATION_TYPE_LINE_CURRENT_20A,
-        .index.line = LINES_INDEX_HP_SPARE,
+        .index.line = LINES_INDEX_HIGH_POWER_SPARE,
     },
 
     [4] = {
@@ -124,32 +124,32 @@ static const struct AcquisitionDestination mux1_map[] = {
 
     [5] = {
         .type = ACQUISITION_DESTINATION_TYPE_LINE_CURRENT_20A,
-        .index.line = LINES_INDEX_PC,
+        .index.line = LINES_INDEX_PRECHARGE,
     },
 
     [6] = {
         .type = ACQUISITION_DESTINATION_TYPE_LINE_CURRENT_20A,
-        .index.line = LINES_INDEX_AS_EBS,
+        .index.line = LINES_INDEX_AUTONOMOUS_EMERGENCY_BRAKE_SYSTEM,
     },
 
     [7] = {
         .type = ACQUISITION_DESTINATION_TYPE_LINE_CURRENT_20A,
-        .index.line = LINES_INDEX_AS_STEER,
+        .index.line = LINES_INDEX_AUTONOMOUS_STEER,
     },
 
     [8] = {
         .type = ACQUISITION_DESTINATION_TYPE_LINE_CURRENT_5A,
-        .index.line = LINES_INDEX_SD,
+        .index.line = LINES_INDEX_SHUTDOWN,
     },
 
     [9] = {
         .type = ACQUISITION_DESTINATION_TYPE_LINE_CURRENT_5A,
-        .index.line = LINES_INDEX_LP_SPARE1,
+        .index.line = LINES_INDEX_LOW_POWER_SPARE1,
     },
 
     [10] = {
         .type = ACQUISITION_DESTINATION_TYPE_LINE_CURRENT_5A,
-        .index.line = LINES_INDEX_LP_SPARE2,
+        .index.line = LINES_INDEX_LOW_POWER_SPARE2,
     },
 
     [11] = {
@@ -164,12 +164,12 @@ static const struct AcquisitionDestination mux1_map[] = {
 
     [13] = {
         .type = ACQUISITION_DESTINATION_TYPE_LINE_CURRENT_5A,
-        .index.line = LINES_INDEX_PWRTRAIN,
+        .index.line = LINES_INDEX_POWERTRAIN,
     },
 
     [14] = {
         .type = ACQUISITION_DESTINATION_TYPE_LINE_CURRENT_5A,
-        .index.line = LINES_INDEX_TLM,
+        .index.line = LINES_INDEX_TELEMETRY,
     },
 
     [15] = {
@@ -197,7 +197,7 @@ static const struct AcquisitionChannel channels_map[] = {
         .mux = ACQUISITION_MUX_TYPE_NONE,
         .destination = {
             .type = ACQUISITION_DESTINATION_TYPE_FEEDBACK_24V,
-            .index.feedback = FEEDBACK_TYPE_ASMS,
+            .index.feedback = FEEDBACK_TYPE_AUTONOMOUS_SYSTEM_MASTER_SWITCH,
         }
     },
 
@@ -205,7 +205,7 @@ static const struct AcquisitionChannel channels_map[] = {
         .mux = ACQUISITION_MUX_TYPE_NONE,
         .destination = {
             .type = ACQUISITION_DESTINATION_TYPE_LINE_VOLTAGE,
-            .index.line = LINES_INDEX_AS_MAIN,
+            .index.line = LINES_INDEX_AUTONOMOUS_MAIN,
         }
     },
 
@@ -213,7 +213,7 @@ static const struct AcquisitionChannel channels_map[] = {
         .mux = ACQUISITION_MUX_TYPE_NONE,
         .destination = {
             .type = ACQUISITION_DESTINATION_TYPE_LINE_VOLTAGE,
-            .index.line = LINES_INDEX_HP_MAIN,
+            .index.line = LINES_INDEX_HIGH_POWER_MAIN,
         }
     },
 
@@ -221,7 +221,7 @@ static const struct AcquisitionChannel channels_map[] = {
         .mux = ACQUISITION_MUX_TYPE_NONE,
         .destination = {
             .type = ACQUISITION_DESTINATION_TYPE_FEEDBACK_24V,
-            .index.feedback = FEEDBACK_TYPE_RES_GO,
+            .index.feedback = FEEDBACK_TYPE_RESET_ENABLE_SIGNAL_GO,
         }
     },
 
@@ -229,7 +229,7 @@ static const struct AcquisitionChannel channels_map[] = {
         .mux = ACQUISITION_MUX_TYPE_NONE,
         .destination = {
             .type = ACQUISITION_DESTINATION_TYPE_FEEDBACK_24V,
-            .index.feedback = FEEDBACK_TYPE_SHUTDOWN_HVD,
+            .index.feedback = FEEDBACK_TYPE_SHUTDOWN_HIGH_VOLTAGE_DISCONNECT,
         }
     },
 
@@ -237,7 +237,7 @@ static const struct AcquisitionChannel channels_map[] = {
         .mux = ACQUISITION_MUX_TYPE_NONE,
         .destination = {
             .type = ACQUISITION_DESTINATION_TYPE_FEEDBACK_24V,
-            .index.feedback = FEEDBACK_TYPE_SHUTDOWN_BSPD,
+            .index.feedback = FEEDBACK_TYPE_SHUTDOWN_BRAKE_SYSTEM_PLAUSIBILITY_DEVICE,
         }
     },
 
@@ -245,7 +245,7 @@ static const struct AcquisitionChannel channels_map[] = {
         .mux = ACQUISITION_MUX_TYPE_NONE,
         .destination = {
             .type = ACQUISITION_DESTINATION_TYPE_FEEDBACK_24V,
-            .index.feedback = FEEDBACK_TYPE_SHUTDOWN_TSMS,
+            .index.feedback = FEEDBACK_TYPE_SHUTDOWN_TRACTIVE_SYSTEM_MASTER_SWITCH,
         }
     },
 

@@ -30,11 +30,11 @@ enum FeedbacksReturnCode {
  */
 enum FeedbacksType {
     FEEDBACK_TYPE_5V = 0x00,     /*!< 5 V supply feedback signal */
-    FEEDBACK_TYPE_ASMS,          /*!< ASMS (Autonomous System Master Switch) feedback*/
-    FEEDBACK_TYPE_RES_GO,        /*!< RES (Reset Enable Signal) GO feedback */
-    FEEDBACK_TYPE_SHUTDOWN_BSPD, /*!< BSPD shutdown circuit feedback */
-    FEEDBACK_TYPE_SHUTDOWN_TSMS, /*!< TSMS shutdown circuit feedback */
-    FEEDBACK_TYPE_SHUTDOWN_HVD,  /*!< HVD shutdown circuit feedback */
+    FEEDBACK_TYPE_AUTONOMOUS_SYSTEM_MASTER_SWITCH,          /*!< ASMS feedback*/
+    FEEDBACK_TYPE_RESET_ENABLE_SIGNAL_GO,        /*!< RES GO feedback */
+    FEEDBACK_TYPE_SHUTDOWN_BRAKE_SYSTEM_PLAUSIBILITY_DEVICE, /*!< BSPD shutdown circuit feedback */
+    FEEDBACK_TYPE_SHUTDOWN_TRACTIVE_SYSTEM_MASTER_SWITCH, /*!< TSMS shutdown circuit feedback */
+    FEEDBACK_TYPE_SHUTDOWN_HIGH_VOLTAGE_DISCONNECT,  /*!< HVD shutdown circuit feedback */
     FEEDBACK_TYPE_SHUTDOWN_OUT,  /*!< Shutdown output feedback signal */
     FEEDBACK_TYPE_COUNT          /*!< Number of feedback channels */
 };

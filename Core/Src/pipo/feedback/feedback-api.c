@@ -70,11 +70,11 @@ EAGLETRT_STATIC void prv_feedback_can_routine(void) {
 
     struct CanPrimaryPiposhutdown *payload = &handler.libcan_message_shutdown.piposhutdown;
     payload->lvms = handler.feedbacks[FEEDBACK_TYPE_5V];
-    payload->hvd = handler.feedbacks[FEEDBACK_TYPE_SHUTDOWN_HVD];
-    payload->bspd = handler.feedbacks[FEEDBACK_TYPE_SHUTDOWN_BSPD];
-    payload->asms = handler.feedbacks[FEEDBACK_TYPE_ASMS];
+    payload->hvd = handler.feedbacks[FEEDBACK_TYPE_SHUTDOWN_HIGH_VOLTAGE_DISCONNECT];
+    payload->bspd = handler.feedbacks[FEEDBACK_TYPE_SHUTDOWN_BRAKE_SYSTEM_PLAUSIBILITY_DEVICE];
+    payload->asms = handler.feedbacks[FEEDBACK_TYPE_AUTONOMOUS_SYSTEM_MASTER_SWITCH];
     payload->res = handler.feedbacks[FEEDBACK_TYPE_SHUTDOWN_OUT];
-    payload->tsms = handler.feedbacks[FEEDBACK_TYPE_SHUTDOWN_TSMS];
+    payload->tsms = handler.feedbacks[FEEDBACK_TYPE_SHUTDOWN_TRACTIVE_SYSTEM_MASTER_SWITCH];
 
     int byte_size = can_primary_api_serialize_from_id(
         frame.id,

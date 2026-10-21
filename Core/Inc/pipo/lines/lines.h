@@ -32,28 +32,28 @@ enum LinesReturnCode {
 enum LinesIndex {
 
     /* Low power domain */
-    LINES_INDEX_LP_MAIN = 0x00, /*!< Low power main */
-    LINES_INDEX_LP_SPARE1,      /*!< Low power spare 1 */
-    LINES_INDEX_LP_SPARE2,      /*!< Low power spare 2 */
+    LINES_INDEX_LOW_POWER_MAIN = 0x00, /*!< Low power main */
+    LINES_INDEX_LOW_POWER_SPARE1,      /*!< Low power spare 1 */
+    LINES_INDEX_LOW_POWER_SPARE2,      /*!< Low power spare 2 */
     LINES_INDEX_DRIVER,         /*!< Low power driver supply */
     LINES_INDEX_LIGHTS,         /*!< Low power lights supply */
-    LINES_INDEX_PWRTRAIN,       /*!< Low power powertrain supply */
-    LINES_INDEX_TLM,            /*!< Low power telemetry supply */
-    LINES_INDEX_SD,             /*!< Shutdown circuit */
-    LINES_INDEX_COOL_LT,        /*!< Low temperature cooling */
-    LINES_INDEX_COOL_HT,        /*!< High temperature cooling */
+    LINES_INDEX_POWERTRAIN,       /*!< Low power powertrain supply */
+    LINES_INDEX_TELEMETRY,            /*!< Low power telemetry supply */
+    LINES_INDEX_SHUTDOWN,             /*!< Shutdown circuit */
+    LINES_INDEX_COOL_LOW_TEMPERATURE,        /*!< Low temperature cooling */
+    LINES_INDEX_COOL_HIGH_TEMPERATURE,        /*!< High temperature cooling */
 
     /* High power domain */
-    LINES_INDEX_HP_MAIN,  /*!< High power main rail */
-    LINES_INDEX_LVBAT,    /*!< Low voltage battery */
-    LINES_INDEX_HP_SPARE, /*!< High power spare rail */
-    LINES_INDEX_PC,       /*!< Precharge control */
+    LINES_INDEX_HIGH_POWER_MAIN,  /*!< High power main rail */
+    LINES_INDEX_LOW_VOLTAGE_BATTERY,    /*!< Low voltage battery */
+    LINES_INDEX_HIGH_POWER_SPARE, /*!< High power spare rail */
+    LINES_INDEX_PRECHARGE,       /*!< Precharge control */
     LINES_INDEX_VISION,   /*!< Low power spare 1 */
 
     /* Autonomous system domain */
-    LINES_INDEX_AS_MAIN,  /*!< Autonomous system main supply */
-    LINES_INDEX_AS_EBS,   /*!< Emergency brake system */
-    LINES_INDEX_AS_STEER, /*!< Steering system */
+    LINES_INDEX_AUTONOMOUS_MAIN,  /*!< Autonomous system main supply */
+    LINES_INDEX_AUTONOMOUS_EMERGENCY_BRAKE_SYSTEM,   /*!< Emergency brake system */
+    LINES_INDEX_AUTONOMOUS_STEER, /*!< Steering system */
 
     LINES_INDEX_COUNT /*!< Number of lines */
 };
