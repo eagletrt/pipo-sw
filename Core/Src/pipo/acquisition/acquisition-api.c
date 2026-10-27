@@ -9,8 +9,8 @@
 #include "acquisition.h"
 #include "eagletrt.h"
 #include "feedback.h"
+#include "tasks-api.h"
 
-#include "task-api.h"
 #include "logging-api.h"
 #include "lines-api.h"
 #include "feedback-api.h"
@@ -283,8 +283,6 @@ void prv_print_data() {
     prv_print_voltages(data, size);
 }
 
-TASK_API_REGISTER(print_data_task, 0, 1000, prv_print_data);
-
 EAGLETRT_STATIC voltage prv_get_actual_voltage(const struct AcquisitionDestination destination, const voltage value) {
 
     switch (destination.type) {
@@ -380,4 +378,11 @@ EAGLETRT_STATIC void prv_update_data_callback() {
     handler.read_voltages();
 }
 
-TASK_API_REGISTER(update_data_task, 0, 100, prv_update_data_callback);
+void acquisition_api_task_update_data(uint8_t task_id){
+    EAGLETRT_API_UNUSED(task_id);
+    prv_update_data_callback();
+}
+void acquisition_api_task_print_data(uint8_t task_id){
+    EAGLETRT_API_UNUSED(task_id);
+    prv_print_data();
+}
