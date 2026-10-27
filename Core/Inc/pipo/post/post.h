@@ -10,6 +10,7 @@
 
 #include "acquisition.h"
 #include "status.h"
+#include "logging.h"
 
 #include "can-communication.h"
 
@@ -33,6 +34,7 @@ struct PostInitData {
     status_led_write led_write; /*!< Callback used to update the status LEDs */
     acquisition_start_callback read_voltages;
     acquisition_mux_address_callback mux_set;
+    logging_log log;
 };
 
 #endif

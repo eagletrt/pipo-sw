@@ -112,7 +112,8 @@ int main(void) {
             } },
         .led_write = led_write_bitmap,
         .read_voltages = adc_signals_start_conversion,
-        .mux_set = mux_set_address
+        .mux_set = mux_set_address,
+        .log = usart_log
     };
 
     /* USER CODE END SysInit */
