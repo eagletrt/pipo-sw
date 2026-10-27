@@ -24,10 +24,10 @@
     ((vout) * (((r1) + (r2)) / (r2)))
 
 #define CURRENT_FROM_VOLTAGE_5A(voltage) \
-    voltage / 800.0f * 1000.0f
+    ((voltage) / 800.0f * 1000.0f)
 
 #define CURRENT_FROM_VOLTAGE_20A(voltage) \
-    voltage / 200.0f * 1000.0f
+    ((voltage) / 200.0f * 1000.0f)
 
 typedef uint16_t voltage_raw; /*!< Raw ADC count as returned by the hardware */
 typedef uint8_t mux_address;  /*!< Multiplexer address index */
