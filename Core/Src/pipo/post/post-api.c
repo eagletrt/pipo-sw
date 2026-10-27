@@ -1,7 +1,8 @@
 /*!
  * \file post-api.c
  * \author Riccardo Segala
- * \date 2026-06-1
+ * \author Mario Mazzara
+ * \date 2026-10-27
  * \brief Implementation of the post module APIs
  */
 

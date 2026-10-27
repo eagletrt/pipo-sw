@@ -1,4 +1,10 @@
-
+/*!
+ * \file post-api.c
+ * \author Riccardo Segala
+ * \author Mario Mazzara
+ * \date 2026-10-27
+ * \brief Implementation of the acquisition module APIs
+ */
 #include "acquisition-api.h"
 #include "acquisition.h"
 #include "eagletrt.h"

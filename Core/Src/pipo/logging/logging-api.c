@@ -1,3 +1,9 @@
+/*!
+ * \file logging-api.c
+ * \author Mario Mazzara
+ * \date 2026-10-27
+ * \brief Public API logging logging implementation.
+ */
 #include <math.h>
 #include "logging-api.h"
 #include "eagletrt.h"
@@ -60,13 +66,6 @@ void prv_print_float(float data) {
 }
 
 void logging_api_print_voltages(const voltage *volts, size_t size) {
-
-    //const voltage *data;
-    //size_t size;
-
-    //data = feedbacks_api_get_feedbacks(&size);
-    // data = lines_api_get_line_voltages(&size);
-
     if (volts == NULL || handler.log == NULL)
         return;
     for (size_t i = 0; i < size; i++) {
