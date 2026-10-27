@@ -1,7 +1,8 @@
 /*!
- * \file post-api.h
+ * \file acquisition-api.h
  * \author Riccardo Segala
- * \date 2026-06-1
+ * \author Mario Mazzara
+ * \date 2026-10-27
  * \brief This module provides the APIs for the acquisition module
  */
 
@@ -50,5 +51,19 @@ enum AcquisitionReturnCode acquisition_api_init(
 enum AcquisitionReturnCode acquisition_api_handle_data(
     const voltage_raw *data,
     const size_t length);
+
+/*!
+ * \brief print data periodic task function
+ * 
+ * \param[in] task_id
+ */
+void acquisition_api_task_print_data(uint8_t task_id);
+
+/*!
+ * \brief update data periodic task function
+ * 
+ * \param[in] task_id
+ */
+void acquisition_api_task_update_data(uint8_t task_id);
 
 #endif

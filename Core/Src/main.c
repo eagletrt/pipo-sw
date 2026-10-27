@@ -29,7 +29,7 @@
 /* USER CODE BEGIN Includes */
 
 #include "post-api.h"
-#include "timebase-api.h"
+#include "scheduler-api.h"
 
 #include "can-communication.h"
 #include "can-communication-router-api.h"
@@ -138,7 +138,7 @@ int main(void) {
     /* USER CODE BEGIN WHILE */
     while (1) {
 
-        timebase_api_routine();
+        scheduler_api_routine();
 
         /* USER CODE END WHILE */
 
