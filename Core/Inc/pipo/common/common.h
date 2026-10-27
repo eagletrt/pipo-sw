@@ -6,7 +6,7 @@
  * \brief           Custom type definitions used inside the project.
  */
 #ifndef COMMON_H
-
+#define COMMON_H
 /*!
  * \defgroup        types Type definitions for various units of measurements.
  * \{
@@ -15,8 +15,6 @@
 typedef float voltage;
 typedef float current;
 
-
 /*! \} */
 
 #endif // !COMMON_H
-
