@@ -1,7 +1,8 @@
 /*!
  * \file post-api.c
  * \author Riccardo Segala
- * \date 2026-06-1
+ * \author Mario Mazzara
+ * \date 2026-10-27
  * \brief Implementation of the post module APIs
  */
 
@@ -11,7 +12,7 @@
 #include "post.h"
 #include "status-api.h"
 #include "acquisition-api.h"
-
+#include "logging-api.h"
 #include "eagletrt-api.h"
 
 EAGLETRT_STATIC enum PostReturnCode prv_post_module_init(const struct PostInitData *data) {
@@ -21,6 +22,9 @@ EAGLETRT_STATIC enum PostReturnCode prv_post_module_init(const struct PostInitDa
     }
     EAGLETRT_API_UNUSED(status_api_init(data->led_write));
     EAGLETRT_API_UNUSED(acquisition_api_init(data->read_voltages, data->mux_set));
+    if (logging_api_init(data->log) != LOGGING_RC_OK) {
+        return_code = POST_RC_ERROR;
+    }
     return return_code;
 }
 
