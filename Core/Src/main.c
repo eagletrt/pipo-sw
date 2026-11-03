@@ -30,6 +30,7 @@
 
 #include "post-api.h"
 #include "timebase-api.h"
+#include "logging-api.h"
 
 #include "can-communication.h"
 #include "can-communication-router-api.h"
@@ -113,7 +114,6 @@ int main(void) {
         .led_write = led_write_bitmap,
         .read_voltages = adc_signals_start_conversion,
         .mux_set = mux_set_address,
-        .log = usart_log
     };
 
     /* USER CODE END SysInit */
@@ -128,6 +128,8 @@ int main(void) {
     /* USER CODE BEGIN 2 */
 
     HAL_ADCEx_Calibration_Start(&hadc1);
+
+    logging_api_init(usart_log);
 
     post_api_run(&init_data);
 
