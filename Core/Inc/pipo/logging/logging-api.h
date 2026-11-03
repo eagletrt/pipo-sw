@@ -20,11 +20,8 @@
 enum LoggingReturnCode logging_api_init(logging_log log);
 
 /*!
- * \brief Prints a list of voltage values.
- * \details Values are space-separated and followed by a newline. No output is
- * produced if \p volts is null or logging has not been initialized.
- * \param[in] volts Array of voltage values.
- * \param[in] size Number of values in \p volts.
+ * \brief Prints a float. 
+ * \param[in] data log to print.
  */
-void logging_api_print_voltages(const voltage *volts, size_t size);
+void logging_api_print_float(float data);
 #endif // !LOGGING_API_H

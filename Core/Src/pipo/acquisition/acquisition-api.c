@@ -259,12 +259,28 @@ static const struct AcquisitionChannel channels_map[] = {
 };
 // clang-format on
 
+/*!
+ * \brief Prints a list of voltage values.
+ * \details Values are space-separated and followed by a newline. No output is
+ * produced if \p volts is null or logging has not been initialized.
+ * \param[in] volts Array of voltage values.
+ * \param[in] size Number of values in \p volts.
+ */
+void prv_print_voltages(const voltage *volts, size_t size) {
+    if (volts == NULL) {
+        return;
+    }
+    for (size_t i = 0; i < size; i++) {
+        logging_api_print_float(volts[i]);
+    }
+}
+
 void prv_print_data() {
     const voltage *data;
     size_t size;
     data = feedbacks_api_get_feedbacks(&size);
     // data = lines_api_get_line_voltages(&size);
-    logging_api_print_voltages(data, size);
+    prv_print_voltages(data, size);
 }
 
 TASK_API_REGISTER(print_data_task, 0, 1000, prv_print_data);

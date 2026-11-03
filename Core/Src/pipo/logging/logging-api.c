@@ -56,20 +56,15 @@ void prv_float_to_string(float num, char *str, int precision) {
     *str = '\0';
 }
 
-void prv_print_float(float data) {
+void logging_api_print_float(float data) {
+    if (handler.log == NULL) {
+        return;
+    }
     char str[100];
 
     prv_float_to_string(data, str, 2);
 
     handler.log(str);
     handler.log(" ");
-}
-
-void logging_api_print_voltages(const voltage *volts, size_t size) {
-    if (volts == NULL || handler.log == NULL)
-        return;
-    for (size_t i = 0; i < size; i++) {
-        prv_print_float(volts[i]);
-    }
     handler.log("\r\n");
 }
