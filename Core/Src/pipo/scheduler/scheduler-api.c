@@ -11,13 +11,13 @@
 #include "can-primary.h"
 #include "tasks-api.h"
 #include "timebase-api.h"
+#include "watchdogs-api.h"
 
 #include "acquisition-api.h"
 #include "feedback-api.h"
 #include "status-api.h"
 
 #include <string.h>
-
 
 EAGLETRT_STATIC struct SchedulerHandler handler;
 
@@ -68,15 +68,20 @@ EAGLETRT_STATIC uint32_t prv_get_tick(void) {
     return timebase_get_tick(&handler.timebase);
 }
 
-enum SchedulerReturnCode scheduler_api_init(void) {
+enum SchedulerReturnCode scheduler_api_init(uint32_t ms_resolution, watchdog_timeout_callback watchdog_callback) {
     memset(&handler, 0, sizeof(handler));
 
-    if (timebase_api_init(&handler.timebase, SCHEDULER_MS_RESOLUTION) != TIMEBASE_RC_OK ||
+    if (timebase_api_init(&handler.timebase, ms_resolution) != TIMEBASE_RC_OK ||
         timebase_set_enable(&handler.timebase, true) != TIMEBASE_RC_OK) {
         return SCHEDULER_RC_ERROR;
     }
 
     if (tasks_api_init(&handler.tasks, task_list, TASK_COUNT, prv_get_tick) != TASKS_RC_OK) {
+        return SCHEDULER_RC_ERROR;
+    }
+
+    if (watchdogs_api_init_pool(&handler.watchdogs_handler, prv_get_tick) != WATCHDOG_RC_OK ||
+        watchdogs_api_init_watchdog(&handler.watchdog, 100U, watchdog_callback) != WATCHDOG_RC_OK) {
         return SCHEDULER_RC_ERROR;
     }
 
@@ -93,4 +98,16 @@ enum TimebaseReturnCode scheduler_api_increase_tick(void) {
 
 uint32_t scheduler_api_get_tick(void) {
     return timebase_get_tick(&handler.timebase);
+}
+
+enum WatchdogReturnCode scheduler_api_watchdog_start(void) {
+    return watchdogs_api_watchdog_start(&handler.watchdogs_handler, &handler.watchdog);
+}
+
+enum WatchdogReturnCode scheduler_api_watchdog_stop(void) {
+    return watchdogs_api_watchdog_stop(&handler.watchdogs_handler, &handler.watchdog);
+}
+
+enum WatchdogReturnCode scheduler_api_watchdog_feed(void) {
+    return watchdogs_api_watchdog_feed(&handler.watchdogs_handler, &handler.watchdog);
 }

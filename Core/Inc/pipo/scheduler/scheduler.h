@@ -14,6 +14,7 @@
 
 #include "tasks.h"
 #include "timebase.h"
+#include "watchdogs.h"
 
 /*! \brief IDs for the tasks registered with the scheduler. */
 enum TaskList {
@@ -39,6 +40,8 @@ enum SchedulerReturnCode {
 struct SchedulerHandler {
     struct TimebaseHandler timebase; /*!< Tick counter used by tasks and watchdogs */
     struct TasksHandler tasks;       /*!< Registered task state and schedule */
+    struct WatchdogHandler watchdogs_handler;
+    struct Watchdog watchdog;
 };
 
 #endif
