@@ -13,6 +13,7 @@
 #include "status-api.h"
 #include "acquisition-api.h"
 #include "logging-api.h"
+#include "scheduler-api.h"
 #include "eagletrt-api.h"
 
 EAGLETRT_STATIC enum PostReturnCode prv_post_module_init(const struct PostInitData *data) {
@@ -22,6 +23,7 @@ EAGLETRT_STATIC enum PostReturnCode prv_post_module_init(const struct PostInitDa
     }
     EAGLETRT_API_UNUSED(status_api_init(data->led_write));
     EAGLETRT_API_UNUSED(acquisition_api_init(data->read_voltages, data->mux_set));
+    EAGLETRT_API_UNUSED(scheduler_api_init(data->timebase_ms_resolution, data->watchdog_callback));
     return return_code;
 }
 
