@@ -23,7 +23,10 @@ EAGLETRT_STATIC enum PostReturnCode prv_post_module_init(const struct PostInitDa
     }
     EAGLETRT_API_UNUSED(status_api_init(data->led_write));
     EAGLETRT_API_UNUSED(acquisition_api_init(data->read_voltages, data->mux_set));
-    EAGLETRT_API_UNUSED(scheduler_api_init(data->timebase_ms_resolution, data->watchdog_callback));
+    enum SchedulerReturnCode scheduler_rc = scheduler_api_init(data->timebase_ms_resolution, data->watchdog_callback);
+    if (scheduler_rc != SCHEDULER_RC_OK) {
+        return_code = POST_RC_ERROR;
+    }
     return return_code;
 }
 
@@ -31,8 +34,10 @@ enum PostReturnCode post_api_run(const struct PostInitData *data) {
 
     if (data->led_write == nullptr ||
         data->read_voltages == nullptr ||
-        data->mux_set == nullptr)
+        data->mux_set == nullptr ||
+        data->watchdog_callback == nullptr) {
         return POST_RC_ERROR;
+    }
 
     return prv_post_module_init(data);
 }

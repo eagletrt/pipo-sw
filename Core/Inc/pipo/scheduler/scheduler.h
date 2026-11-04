@@ -8,8 +8,6 @@
 #ifndef SCHEDULER_H
 #define SCHEDULER_H
 
-#define SCHEDULER_MS_RESOLUTION (1U)
-
 #include <stdint.h>
 
 #include "tasks.h"
@@ -30,7 +28,8 @@ enum TaskList {
  * \brief Return codes for the scheduler module APIs.
  */
 enum SchedulerReturnCode {
-    SCHEDULER_RC_OK,   /*!< Operation completed successfully */
+    SCHEDULER_RC_OK, /*!< Operation completed successfully */
+    SCHEDULER_RC_NULL_POINTER,
     SCHEDULER_RC_ERROR /*!< Generic failure */
 };
 

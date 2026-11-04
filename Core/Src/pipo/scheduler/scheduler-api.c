@@ -69,19 +69,34 @@ EAGLETRT_STATIC uint32_t prv_get_tick(void) {
 }
 
 enum SchedulerReturnCode scheduler_api_init(uint32_t ms_resolution, watchdog_timeout_callback watchdog_callback) {
+    if (watchdog_callback == NULL) {
+        return SCHEDULER_RC_NULL_POINTER;
+    }
+
     memset(&handler, 0, sizeof(handler));
 
-    if (timebase_api_init(&handler.timebase, ms_resolution) != TIMEBASE_RC_OK ||
-        timebase_set_enable(&handler.timebase, true) != TIMEBASE_RC_OK) {
+    enum TimebaseReturnCode timebase_rc = timebase_api_init(&handler.timebase, ms_resolution);
+    if (timebase_rc != TIMEBASE_RC_OK) {
         return SCHEDULER_RC_ERROR;
     }
 
-    if (tasks_api_init(&handler.tasks, task_list, TASK_COUNT, prv_get_tick) != TASKS_RC_OK) {
+    timebase_rc = timebase_set_enable(&handler.timebase, true);
+    if (timebase_rc != TIMEBASE_RC_OK) {
         return SCHEDULER_RC_ERROR;
     }
 
-    if (watchdogs_api_init_pool(&handler.watchdogs_handler, prv_get_tick) != WATCHDOG_RC_OK ||
-        watchdogs_api_init_watchdog(&handler.watchdog, 100U, watchdog_callback) != WATCHDOG_RC_OK) {
+    enum TasksReturnCode tasks_rc = tasks_api_init(&handler.tasks, task_list, TASK_COUNT, prv_get_tick);
+    if (tasks_rc != TASKS_RC_OK) {
+        return SCHEDULER_RC_ERROR;
+    }
+
+    enum WatchdogReturnCode watchdog_rc = watchdogs_api_init_pool(&handler.watchdogs_handler, prv_get_tick);
+    if (watchdog_rc != WATCHDOG_RC_OK) {
+        return SCHEDULER_RC_ERROR;
+    }
+
+    watchdog_rc = watchdogs_api_init_watchdog(&handler.watchdog, 100U, watchdog_callback);
+    if (watchdog_rc != WATCHDOG_RC_OK) {
         return SCHEDULER_RC_ERROR;
     }
 
