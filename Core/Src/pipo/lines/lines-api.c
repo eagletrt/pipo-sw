@@ -10,7 +10,7 @@
 #include <string.h>
 
 #include "eagletrt.h"
-#include "task-api.h"
+#include "tasks-api.h"
 #include "can-primary.h"
 
 EAGLETRT_STATIC struct LinesHandler handler;
