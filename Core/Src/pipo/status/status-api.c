@@ -16,7 +16,7 @@
 
 #include "can-communication.h"
 #include "can-communication-api.h"
-#include "task-api.h"
+#include "tasks-api.h"
 #include "status.h"
 
 #define ANIMATION_END 0xff
@@ -86,5 +86,11 @@ EAGLETRT_STATIC void prv_status_can_routine(void) {
     }
 }
 
-TASK_API_REGISTER(status_task, 0, 200, prv_status_routine);
-TASK_API_REGISTER(status_can_send_task, 5, can_primary_cycle_time_pipofsm, prv_status_can_routine);
+void status_api_task_led(uint8_t task_id){
+    EAGLETRT_API_UNUSED(task_id);
+    prv_status_routine();
+}
+void status_api_task_can(uint8_t task_id){
+    EAGLETRT_API_UNUSED(task_id);
+    prv_status_can_routine();
+}
