@@ -1,8 +1,7 @@
 /*!
  * \file post-api.c
  * \author Riccardo Segala
- * \author Mario Mazzara
- * \date 2026-10-27
+ * \date 2026-06-1
  * \brief Implementation of the post module APIs
  */
 
@@ -12,8 +11,7 @@
 #include "post.h"
 #include "status-api.h"
 #include "acquisition-api.h"
-#include "logging-api.h"
-#include "scheduler-api.h"
+
 #include "eagletrt-api.h"
 
 EAGLETRT_STATIC enum PostReturnCode prv_post_module_init(const struct PostInitData *data) {
@@ -23,10 +21,6 @@ EAGLETRT_STATIC enum PostReturnCode prv_post_module_init(const struct PostInitDa
     }
     EAGLETRT_API_UNUSED(status_api_init(data->led_write));
     EAGLETRT_API_UNUSED(acquisition_api_init(data->read_voltages, data->mux_set));
-    enum SchedulerReturnCode scheduler_rc = scheduler_api_init(data->timebase_ms_resolution, data->watchdog_callback);
-    if (scheduler_rc != SCHEDULER_RC_OK) {
-        return_code = POST_RC_ERROR;
-    }
     return return_code;
 }
 
@@ -34,10 +28,8 @@ enum PostReturnCode post_api_run(const struct PostInitData *data) {
 
     if (data->led_write == nullptr ||
         data->read_voltages == nullptr ||
-        data->mux_set == nullptr ||
-        data->watchdog_callback == nullptr) {
+        data->mux_set == nullptr)
         return POST_RC_ERROR;
-    }
 
     return prv_post_module_init(data);
 }

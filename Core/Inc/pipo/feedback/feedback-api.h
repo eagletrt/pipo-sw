@@ -1,8 +1,7 @@
 /*!
  * \file feedbacks-api.h
  * \author Riccardo Segala 
- * \author Mario Mazzara
- * \date 2026-10-27
+ * \date 2026-06-1
  * \brief This module provides the APIs for the feedbacks module
  */
 
@@ -42,10 +41,3 @@ enum FeedbacksReturnCode lines_api_get_feedback(const enum FeedbacksType type, v
  * \return The autonomous system line voltage in V.
  */
 const voltage *feedbacks_api_get_feedbacks(size_t *size);
-
-/*!
- * \brief send data data to can periodic task function
- * 
- * \param[in] task_id
- */
-void feedbacks_api_task_can(uint8_t task_id);

@@ -29,9 +29,8 @@
 /* USER CODE BEGIN Includes */
 
 #include "post-api.h"
-#include "scheduler-api.h"
-#include "logging-api.h"
-#include "eagletrt.h"
+#include "timebase-api.h"
+
 #include "can-communication.h"
 #include "can-communication-router-api.h"
 
@@ -77,10 +76,6 @@ static void VectorBase_Config(void) {
     SCB->VTOR = (unsigned long)&g_pfnVectors[0];
 }
 
-EAGLETRT_STATIC void prv_watchdog_callback(void) {
-    // TODO: Add watchdog timeout handling.
-}
-
 /* USER CODE END 0 */
 
 /**
@@ -117,9 +112,7 @@ int main(void) {
             } },
         .led_write = led_write_bitmap,
         .read_voltages = adc_signals_start_conversion,
-        .mux_set = mux_set_address,
-        .timebase_ms_resolution = 1,
-        .watchdog_callback = prv_watchdog_callback
+        .mux_set = mux_set_address
     };
 
     /* USER CODE END SysInit */
@@ -135,8 +128,6 @@ int main(void) {
 
     HAL_ADCEx_Calibration_Start(&hadc1);
 
-    logging_api_init(usart_log);
-
     post_api_run(&init_data);
 
     HAL_TIM_Base_Start_IT(&htim1);
@@ -147,7 +138,7 @@ int main(void) {
     /* USER CODE BEGIN WHILE */
     while (1) {
 
-        scheduler_api_routine();
+        timebase_api_routine();
 
         /* USER CODE END WHILE */
 
