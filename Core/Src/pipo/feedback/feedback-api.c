@@ -15,7 +15,7 @@
 #include "can-communication-api.h"
 #include "feedback.h"
 #include "feedback-api.h"
-#include "task-api.h"
+#include "tasks-api.h"
 
 /* Internal module state */
 static struct FeedbacksHandler handler;
@@ -86,4 +86,7 @@ EAGLETRT_STATIC void prv_feedback_can_routine(void) {
     }
 }
 
-TASK_API_REGISTER(feedback_can_send_task, 5, can_primary_cycle_time_piposhutdown, prv_feedback_can_routine);
+void feedbacks_api_task_can(uint8_t task_id){
+    EAGLETRT_API_UNUSED(task_id);
+    prv_feedback_can_routine();
+}
