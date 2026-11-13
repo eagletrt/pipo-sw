@@ -1,17 +1,10 @@
-/*!
- * \file post-api.c
- * \author Riccardo Segala
- * \author Mario Mazzara
- * \date 2026-10-27
- * \brief Implementation of the acquisition module APIs
- */
+
 #include "acquisition-api.h"
 #include "acquisition.h"
 #include "eagletrt.h"
 #include "feedback.h"
-#include "tasks-api.h"
+#include "task-api.h"
 
-#include "logging-api.h"
 #include "lines-api.h"
 #include "feedback-api.h"
 
@@ -259,29 +252,71 @@ static const struct AcquisitionChannel channels_map[] = {
 };
 // clang-format on
 
-/*!
- * \brief Prints a list of voltage values.
- * \details Values are space-separated and followed by a newline. No output is
- * produced if \p volts is null or logging has not been initialized.
- * \param[in] volts Array of voltage values.
- * \param[in] size Number of values in \p volts.
- */
-void prv_print_voltages(const voltage *volts, size_t size) {
-    if (volts == NULL) {
-        return;
+#include <math.h>
+#include "usart.h"
+
+void float_to_string(float num, char *str, int precision) {
+    int int_part = (int)num;
+    float frac_part = fabsf(num - (float)int_part);
+
+    // handle negative numbers
+    if (num < 0 && int_part == 0) {
+        *str++ = '-';
     }
-    for (size_t i = 0; i < size; i++) {
-        logging_api_print_float(volts[i]);
+
+    // convert integer part
+    char temp[20];
+    int i = 0;
+
+    int n = int_part < 0 ? -int_part : int_part;
+
+    do {
+        temp[i++] = (n % 10) + '0';
+        n /= 10;
+    } while (n > 0);
+
+    // reverse integer digits into output
+    while (i--) {
+        *str++ = temp[i];
     }
+
+    *str++ = '.';
+
+    // convert fractional part
+    for (int j = 0; j < precision; j++) {
+        frac_part *= 10;
+        int digit = (int)frac_part;
+        *str++ = digit + '0';
+        frac_part -= digit;
+    }
+
+    *str = '\0';
 }
 
-void prv_print_data() {
+void print_float(float data) {
+    char str[100];
+
+    float_to_string(data, str, 2);
+
+    usart_log(str);
+    usart_log(" ");
+}
+
+void print_data() {
+
     const voltage *data;
     size_t size;
+
     data = feedbacks_api_get_feedbacks(&size);
     // data = lines_api_get_line_voltages(&size);
-    prv_print_voltages(data, size);
+
+    for (size_t i = 0; i < size; i++) {
+        print_float(data[i]);
+    }
+    usart_log("\r\n");
 }
+
+TASK_API_REGISTER(print_data_task, 0, 1000, print_data);
 
 EAGLETRT_STATIC voltage prv_get_actual_voltage(const struct AcquisitionDestination destination, const voltage value) {
 
@@ -378,11 +413,4 @@ EAGLETRT_STATIC void prv_update_data_callback() {
     handler.read_voltages();
 }
 
-void acquisition_api_task_update_data(uint8_t task_id){
-    EAGLETRT_API_UNUSED(task_id);
-    prv_update_data_callback();
-}
-void acquisition_api_task_print_data(uint8_t task_id){
-    EAGLETRT_API_UNUSED(task_id);
-    prv_print_data();
-}
+TASK_API_REGISTER(update_data_task, 0, 100, prv_update_data_callback);

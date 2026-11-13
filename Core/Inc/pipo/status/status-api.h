@@ -1,8 +1,7 @@
 /*!
  * \file status-api.h
  * \author Riccardo Segala
- * \author Mario Mazzara
- * \date 2026-10-27
+ * \date 2026-06-2
  * \brief This module provides the APIs for controlling the status LEDs
  */
 
@@ -34,19 +33,5 @@ enum StatusReturnCode status_api_init(const status_led_write led_write);
  * \retval STATUS_RC_OK on success.
  */
 enum StatusReturnCode status_api_set_status(const enum StatusType status);
-
-/*!
- * \brief update leds periodic task function
- * 
- * \param[in] task_id
- */
-void status_api_task_led(uint8_t task_id);
-
-/*!
- * \brief send data data to can periodic task function
- * 
- * \param[in] task_id
- */
-void status_api_task_can(uint8_t task_id);
 
 #endif
