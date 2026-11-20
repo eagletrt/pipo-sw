@@ -9,6 +9,8 @@
 #define SCHEDULER_API_H
 
 #include "scheduler.h"
+#include "tasks.h"
+#include "watchdogs.h"
 
 /*!
  * \brief Initializes the task scheduler.
@@ -33,7 +35,7 @@ enum SchedulerReturnCode scheduler_api_init(uint32_t ms_resolution, watchdog_tim
  * \retval TASKS_RC_TEMPORAL_DISCONTINUITY The user tried to travel to the past
  * \retval TASKS_RC_NULL_POINTER A null pointer was passed as argument to the task api
  */
-enum TasksReturnCode scheduler_api_routine(void);
+enum TasksReturnCode scheduler_api_task_routine(void);
 
 /*!
  * \brief Advances the scheduler tick.
@@ -92,4 +94,6 @@ enum WatchdogReturnCode scheduler_api_watchdog_stop(void);
  */
 enum WatchdogReturnCode scheduler_api_watchdog_feed(void);
 
+enum TasksReturnCode scheduler_api_task_start(enum TaskList task_id);
+enum TasksReturnCode scheduler_api_task_stop(enum TaskList task_id);
 #endif
