@@ -9,8 +9,6 @@
 #define SCHEDULER_API_H
 
 #include "scheduler.h"
-#include "tasks.h"
-#include "watchdogs.h"
 
 /*!
  * \brief Initializes the task scheduler.

@@ -10,14 +10,12 @@
 #include "eagletrt.h"
 #include "can-primary.h"
 #include "tasks-api.h"
-#include "tasks.h"
 #include "timebase-api.h"
 #include "watchdogs-api.h"
 
 #include "acquisition-api.h"
 #include "feedback-api.h"
 #include "status-api.h"
-#include "watchdogs.h"
 
 #include <string.h>
 

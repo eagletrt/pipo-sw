@@ -4,7 +4,6 @@
 #include "eagletrt-fsm.h"
 #include "post-api.h"
 #include "scheduler-api.h"
-#include "tasks.h"
 
 EAGLETRT_STATIC struct FSMHandler fsm_handler;
 

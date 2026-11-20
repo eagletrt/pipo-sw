@@ -21,7 +21,6 @@
 #include "adc.h"
 #include "dma.h"
 #include "fdcan.h"
-#include "pipo-fsm.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
