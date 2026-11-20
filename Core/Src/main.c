@@ -28,10 +28,10 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
-#include "post-api.h"
-#include "scheduler-api.h"
+#include "post.h"
 #include "logging-api.h"
 #include "eagletrt.h"
+#include "pipo-fsm-api.h"
 #include "can-communication.h"
 #include "can-communication-router-api.h"
 
@@ -135,9 +135,10 @@ int main(void) {
 
     HAL_ADCEx_Calibration_Start(&hadc1);
 
-    logging_api_init(usart_log);
-
-    post_api_run(&init_data);
+    EAGLETRT_API_UNUSED(logging_api_init(usart_log));
+    enum PipoFsmReturnCode fsm_init_rc = pipo_fsm_api_init();
+    if (fsm_init_rc == PIPO_FSM_RC_OK)
+        EAGLETRT_API_UNUSED(pipo_fsm_api_run_state(&init_data));
 
     HAL_TIM_Base_Start_IT(&htim1);
 
@@ -146,8 +147,8 @@ int main(void) {
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
     while (1) {
-
-        scheduler_api_routine();
+        if (fsm_init_rc == PIPO_FSM_RC_OK)
+            EAGLETRT_API_UNUSED(pipo_fsm_api_run_state(NULL));
 
         /* USER CODE END WHILE */
 
