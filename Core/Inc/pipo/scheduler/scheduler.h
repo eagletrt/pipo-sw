@@ -1,7 +1,7 @@
 /*!
  * \file scheduler.h
  * \author Mario Mazzara 
- * \date 2026-10-27
+ * \date 2026-11-23
  * \brief Module for managing tasks and watchdogs
  */
 

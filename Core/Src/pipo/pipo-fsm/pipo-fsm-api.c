@@ -1,3 +1,9 @@
+/*!
+ * \file pipo-fsm-api.c
+ * \author Mario Mazzara
+ * \date 2026-11-23
+ * \brief Implementation of the pipo FSM api
+ */
 #include "eagletrt-api.h"
 #include "eagletrt-fsm-api.h"
 #include "pipo-fsm-api.h"
