@@ -31,8 +31,7 @@ void prv_stop_tasks(void *data) {
 }
 
 // _______ INIT ______
-constexpr size_t init_transition_list_size = 2;
-struct Transition init_transition_list[init_transition_list_size] = {
+struct Transition init_transition_list[] = {
     { .to = PIPO_FSM_IDLE, .function = prv_start_tasks },
     { .to = PIPO_FSM_FATAL, .function = NULL },
 };
@@ -47,8 +46,7 @@ void prv_init(void *data) {
 // ___________________
 
 // _______ IDLE ______
-constexpr size_t idle_transition_list_size = 2;
-struct Transition idle_transition_list[idle_transition_list_size] = {
+struct Transition idle_transition_list[] = {
     { .to = PIPO_FSM_FLASH, .function = prv_stop_tasks },
     { .to = PIPO_FSM_FATAL, .function = prv_stop_tasks },
 };
@@ -63,8 +61,7 @@ void prv_idle(void *data) {
 // ___________________
 
 // ______ FLASH ______
-constexpr size_t flash_transition_list_size = 2;
-struct Transition flash_transition_list[flash_transition_list_size] = {
+struct Transition flash_transition_list[] = {
     { .to = PIPO_FSM_IDLE, .function = prv_start_tasks },
     { .to = PIPO_FSM_FATAL, .function = NULL },
 };
@@ -76,7 +73,9 @@ void prv_flash(void *data) {
 // ___________________
 
 // ______ FATAL ______
-struct Transition fatal_to_fatal = { .to = PIPO_FSM_FATAL, .function = NULL };
+struct Transition fatal_transition_list[] = {
+    { .to = PIPO_FSM_FATAL, .function = NULL },
+};
 void prv_fatal(void *data) {
     EAGLETRT_API_UNUSED(data);
     return;
@@ -88,22 +87,22 @@ struct State state_list[PIPO_FSM_STATE_COUNT] = {
       .function = prv_init,
       .next_default = PIPO_FSM_INIT,
       .transitions = init_transition_list,
-      .num_transitions = init_transition_list_size },
+      .num_transitions = EAGLETRT_FSM_TRANSITION_LEN(init_transition_list) },
     { .id = PIPO_FSM_IDLE,
       .function = prv_idle,
       .next_default = PIPO_FSM_IDLE,
       .transitions = idle_transition_list,
-      .num_transitions = idle_transition_list_size },
+      .num_transitions = EAGLETRT_FSM_TRANSITION_LEN(idle_transition_list) },
     { .id = PIPO_FSM_FLASH,
       .function = prv_flash,
       .next_default = PIPO_FSM_FLASH,
       .transitions = flash_transition_list,
-      .num_transitions = flash_transition_list_size },
+      .num_transitions = EAGLETRT_FSM_TRANSITION_LEN(flash_transition_list) },
     { .id = PIPO_FSM_FATAL,
       .function = prv_fatal,
       .next_default = PIPO_FSM_FATAL,
-      .transitions = &fatal_to_fatal,
-      .num_transitions = 1 }
+      .transitions = fatal_transition_list,
+      .num_transitions = EAGLETRT_FSM_TRANSITION_LEN(fatal_transition_list) }
 };
 
 enum PipoFsmReturnCode pipo_fsm_api_init() {
