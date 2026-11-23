@@ -1,7 +1,7 @@
 /*!
  * \file scheduler-api.h
  * \author Mario Mazzara
- * \date 2026-10-27
+ * \date 2026-11-23
  * \brief APIs for the scheduler to manage tasks and watchdogs
  */
 
@@ -20,6 +20,7 @@
  *
  * \retval SCHEDULER_RC_OK Initialization succeeded.
  * \retval SCHEDULER_RC_ERROR Initialization failed.
+ * \retval SCHEDULER_RC_NULL_POINTER NULL watchdog_callback was given
  */
 enum SchedulerReturnCode scheduler_api_init(uint32_t ms_resolution, watchdog_timeout_callback watchdog_callback);
 
@@ -33,7 +34,7 @@ enum SchedulerReturnCode scheduler_api_init(uint32_t ms_resolution, watchdog_tim
  * \retval TASKS_RC_TEMPORAL_DISCONTINUITY The user tried to travel to the past
  * \retval TASKS_RC_NULL_POINTER A null pointer was passed as argument to the task api
  */
-enum TasksReturnCode scheduler_api_routine(void);
+enum TasksReturnCode scheduler_api_task_routine(void);
 
 /*!
  * \brief Advances the scheduler tick.
@@ -92,4 +93,27 @@ enum WatchdogReturnCode scheduler_api_watchdog_stop(void);
  */
 enum WatchdogReturnCode scheduler_api_watchdog_feed(void);
 
+/*!
+ * \brief Enables a scheduled task.
+ * \details A disabled task starts according to its configured start delay.
+ * \param task_id ID of the task to enable.
+ * \retval TASKS_RC_OK The task was enabled.
+ * \retval TASKS_RC_INVALID_ID The task ID is not valid.
+ * \retval TASKS_RC_NULL_POINTER The task handler is not initialized.
+ * \retval TASKS_RC_TEMPORAL_DISCONTINUITY The tick count moved backwards.
+ * \retval TASKS_RC_ERROR The task could not be scheduled.
+ */
+enum TasksReturnCode scheduler_api_task_start(enum TaskList task_id);
+
+/*!
+ * \brief Disables a scheduled task.
+ * \details The task starts from its configured delay when enabled again.
+ * \param task_id ID of the task to disable.
+ * \retval TASKS_RC_OK The task was disabled.
+ * \retval TASKS_RC_INVALID_ID The task ID is not valid.
+ * \retval TASKS_RC_NULL_POINTER The task handler is not initialized.
+ * \retval TASKS_RC_TEMPORAL_DISCONTINUITY The tick count moved backwards.
+ * \retval TASKS_RC_ERROR The task could not be removed from the schedule.
+ */
+enum TasksReturnCode scheduler_api_task_stop(enum TaskList task_id);
 #endif

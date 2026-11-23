@@ -1,7 +1,7 @@
 /*!
  * \file scheduler-api.c
  * \author Mario Mazzara
- * \date 2026-10-26
+ * \date 2026-11-23
  * \brief Implementation of the scheduler module APIs
  */
 
@@ -103,7 +103,7 @@ enum SchedulerReturnCode scheduler_api_init(uint32_t ms_resolution, watchdog_tim
     return SCHEDULER_RC_OK;
 }
 
-enum TasksReturnCode scheduler_api_routine(void) {
+enum TasksReturnCode scheduler_api_task_routine(void) {
     return tasks_api_routine(&handler.tasks);
 }
 
@@ -125,4 +125,11 @@ enum WatchdogReturnCode scheduler_api_watchdog_stop(void) {
 
 enum WatchdogReturnCode scheduler_api_watchdog_feed(void) {
     return watchdogs_api_watchdog_feed(&handler.watchdogs_handler, &handler.watchdog);
+}
+
+enum TasksReturnCode scheduler_api_task_start(enum TaskList task_id) {
+    return tasks_api_enable_task(&handler.tasks, task_id);
+}
+enum TasksReturnCode scheduler_api_task_stop(enum TaskList task_id) {
+    return tasks_api_disable_task(&handler.tasks, task_id);
 }
