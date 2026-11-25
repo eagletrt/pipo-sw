@@ -32,18 +32,22 @@
 
 /* USER CODE END 1 */
 
-#n/** Configure pins as #n #t#t #t* Analog #n #t#t #t* Input #n #t#t #t* Output#n #t#t #t* EVENT_OUT#n #t#t #t* EXTI
+/** Configure pins as
+        * Analog
+        * Input
+        * Output
+        * EVENT_OUT
+        * EXTI
 */
 void MX_GPIO_Init(void)
 {
-#n
-#n#t/* GPIO Ports Clock Enable */
-#t__HAL_RCC_GPIOB_CLK_ENABLE();
-#t__HAL_RCC_GPIOC_CLK_ENABLE();
-#t__HAL_RCC_GPIOA_CLK_ENABLE();
-#n
+
+  /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+  __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+
 }
-#n
 
 /* USER CODE BEGIN 2 */
 
