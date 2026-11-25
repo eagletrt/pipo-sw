@@ -63,7 +63,7 @@ _Min_Stack_Size = 0x400; /* required amount of stack */
 MEMORY
 {
 RAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 30K
-FLASH (rx)      : ORIGIN = 0x8000000, LENGTH = 256K
+FLASH (rx)      : ORIGIN = 0x8000000, LENGTH = 12K /* the boot loader should not exceed 12 */
 }
 
 /* Define output sections */
@@ -161,11 +161,6 @@ SECTIONS
     *(.RamFunc)        /* .RamFunc sections */
     *(.RamFunc*)       /* .RamFunc* sections */
 
-    __tasks_start = .;
-    KEEP(*(.tasks))
-    KEEP(*(.tasks*))
-    __tasks_end = .;
-
     . = ALIGN(4);
     _edata = .;        /* define a global symbol at data end */
   } >RAM AT> FLASH
@@ -207,7 +202,6 @@ SECTIONS
     libm.a ( * )
     libgcc.a ( * )
   }
-
 
 }
 

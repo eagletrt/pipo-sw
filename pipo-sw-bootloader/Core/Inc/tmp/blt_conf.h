@@ -22,20 +22,17 @@
 ****************************************************************************************/
 /* CAN communication (C0 has FDCAN). */
 #define BOOT_COM_CAN_ENABLE              (1)
-#define BOOT_COM_CAN_BAUDRATE            (500000)   /* pick what matches your bus */
-#define BOOT_COM_CAN_TX_MSG_ID           (0x17u)
+#define BOOT_COM_CAN_BAUDRATE            (1000000)   /* pick what matches your bus */
+#define BOOT_COM_CAN_TX_MSG_ID           (0x75u)
 #define BOOT_COM_CAN_TX_MAX_DATA         (8)
-#define BOOT_COM_CAN_RX_MSG_ID           (0x18u)
+#define BOOT_COM_CAN_RX_MSG_ID           (0x76u)
 #define BOOT_COM_CAN_RX_MAX_DATA         (8)
+/** \brief Configure CAN classic (0) or CAN FD (1). */
+#define BOOT_COM_CAN_FD_ENABLE (0)
 #define BOOT_COM_CAN_CHANNEL_INDEX       (0)
 
-/* UART (RS232) â€“ disabled unless you want UART bootloader. */
+/* UART (RS232) ¿ disabled unless you want UART bootloader. */
 #define BOOT_COM_RS232_ENABLE            (0)
-#define BOOT_COM_RS232_BAUDRATE          (115200)
-#define BOOT_COM_RS232_TX_MAX_DATA       (64)
-#define BOOT_COM_RS232_RX_MAX_DATA       (64)
-#define BOOT_COM_RS232_CHANNEL_INDEX     (0)
-
 
 /****************************************************************************************
 *   B A C K D O O R   E N T R Y   C O N F I G U R A T I O N
@@ -48,8 +45,12 @@
 ****************************************************************************************/
 /* STM32C0 devices have up to 64 KB Flash. Adjust if yours is smaller (e.g. 32). */
 #define BOOT_NVM_HOOKS_ENABLE            (0)
-#define BOOT_NVM_SIZE_KB                 (64)
+#define BOOT_NVM_SIZE_KB                 (256)
 #define BOOT_NVM_CHECKSUM_HOOKS_ENABLE   (0)
+/** \brief Enable support for a custom flash layout table. It is located in
+ *         flash_layout.c, which is included by flash.c.
+ */
+#define BOOT_FLASH_CUSTOM_LAYOUT_ENABLE (1)
 
 
 /****************************************************************************************

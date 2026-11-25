@@ -63,7 +63,7 @@ _Min_Stack_Size = 0x400; /* required amount of stack */
 MEMORY
 {
 RAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 30K
-FLASH (rx)      : ORIGIN = 0x8020000, LENGTH = 248K
+FLASH (rx)      : ORIGIN = 0x8003000, LENGTH = 244K /* 256K - 12K reserved for the OpenBLT bootloader (see its flash_layout.c) */
 }
 
 /* Define output sections */
@@ -182,6 +182,15 @@ SECTIONS
     __bss_end__ = _ebss;
   } >RAM
 
+  . = ALIGN(4);
+  .tasks :
+  {
+      __tasks_start = .;
+      KEEP(*(.tasks))
+      __tasks_end = .;
+      . = ALIGN(4);
+  } > RAM
+
   /* User_heap_stack section, used to check that there is enough RAM left */
   ._user_heap_stack :
   {
@@ -202,6 +211,7 @@ SECTIONS
     libm.a ( * )
     libgcc.a ( * )
   }
+
 
 }
 

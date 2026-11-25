@@ -32,47 +32,18 @@
 
 /* USER CODE END 1 */
 
-/** Configure pins as
-        * Analog
-        * Input
-        * Output
-        * EVENT_OUT
-        * EXTI
+#n/** Configure pins as #n #t#t #t* Analog #n #t#t #t* Input #n #t#t #t* Output#n #t#t #t* EVENT_OUT#n #t#t #t* EXTI
 */
 void MX_GPIO_Init(void)
 {
-
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
-
-  /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOB_CLK_ENABLE();
-  __HAL_RCC_GPIOC_CLK_ENABLE();
-  __HAL_RCC_GPIOA_CLK_ENABLE();
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, MUX_A1_Pin|STATUS_1_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, STATUS_2_Pin|STATUS_3_Pin|MUX_A0_Pin|MUX_A2_Pin
-                          |MUX_A3_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pins : MUX_A1_Pin STATUS_1_Pin */
-  GPIO_InitStruct.Pin = MUX_A1_Pin|STATUS_1_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : STATUS_2_Pin STATUS_3_Pin MUX_A0_Pin MUX_A2_Pin
-                           MUX_A3_Pin */
-  GPIO_InitStruct.Pin = STATUS_2_Pin|STATUS_3_Pin|MUX_A0_Pin|MUX_A2_Pin
-                          |MUX_A3_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
+#n
+#n#t/* GPIO Ports Clock Enable */
+#t__HAL_RCC_GPIOB_CLK_ENABLE();
+#t__HAL_RCC_GPIOC_CLK_ENABLE();
+#t__HAL_RCC_GPIOA_CLK_ENABLE();
+#n
 }
+#n
 
 /* USER CODE BEGIN 2 */
 
